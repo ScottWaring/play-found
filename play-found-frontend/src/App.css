@@ -82,3 +82,23 @@ padding-top: 1em;
 .landing-container {
   height: 100%;
 }
+
+/* General sidebar styles */
+.bm-menu {
+  background: #707070;
+  padding: 2.5em 1.5em 0;
+  font-size: 1.15em;
+  color: white;
+  width: 100%;
+}
+
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+    color: white;
+  }
+
+  /* Color/shape of close button cross */
+  .bm-cross {
+    background: white;
+  }
