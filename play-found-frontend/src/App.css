@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  background-image: radial-gradient(circle, #efffef, #00fa9a)
 }
 
 .App-logo {
@@ -29,4 +30,55 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.drop-menu {
+  width: 3em;
+  height: 3em;
+}
+
+.nav-drop-menu {
+  float: left;
+  margin-left: 3em;
+  margin-top: 1em;
+  /* border-style: dotted; */
+}
+
+.nav-header {
+  height: 8em;
+  width: 100%;
+  /* border-style: solid; */
+}
+
+.castle-header {
+  /* border-style:solid; */
+  width: 50%;
+  margin-left: 10%;
+  padding-top:1em;
+  padding-left: 17%;
+}
+
+.castle {
+  width: 80%;
+  /* border-style: solid; */
+  float: left;
+}
+
+.footer {
+  height: 4em;
+}
+
+.title {
+padding-top: 1em;
+}
+
+/* .title h1 {
+  float: left;
+  font-size: 3em;
+  border-style: dashed;
+  color: #545ed8;
+} */
+
+.landing-container {
+  height: 100%;
 }
