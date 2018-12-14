@@ -5,6 +5,8 @@
   "dependencies": {
     "bcrypt": "^3.0.2",
     "react": "^16.6.3",
+    "react-burger-menu": "^2.5.4",
+    "react-device-detect": "^1.6.1",
     "react-dom": "^16.6.3",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",

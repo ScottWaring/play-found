@@ -10,10 +10,49 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_12_223050) do
+ActiveRecord::Schema.define(version: 2018_12_13_151729) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bathrooms", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id"
+    t.string "location"
+    t.string "business_type"
+    t.integer "rating"
+    t.boolean "changing_table"
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_bathrooms_on_user_id"
+  end
+
+  create_table "cached_playgrounds", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "location"
+    t.string "business_type"
+    t.integer "rating"
+    t.boolean "bathroom"
+    t.text "description"
+    t.string "img_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_cached_playgrounds_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "title"
+    t.bigint "user_id"
+    t.text "review"
+    t.integer "rating"
+    t.bigint "cached_playground_id"
+    t.string "yelp_playground"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cached_playground_id"], name: "index_reviews_on_cached_playground_id"
+    t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "username"
@@ -26,4 +65,8 @@ ActiveRecord::Schema.define(version: 2018_12_12_223050) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "bathrooms", "users"
+  add_foreign_key "cached_playgrounds", "users"
+  add_foreign_key "reviews", "cached_playgrounds"
+  add_foreign_key "reviews", "users"
 end

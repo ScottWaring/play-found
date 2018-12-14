@@ -65,20 +65,68 @@
 }
 
 .footer {
-  height: 4em;
+  height: 2em;
 }
 
 .title {
 padding-top: 1em;
 }
 
-/* .title h1 {
-  float: left;
-  font-size: 3em;
-  border-style: dashed;
-  color: #545ed8;
-} */
+
 
 .landing-container {
-  height: 100%;
+  height: 100vh;
 }
+
+/* General sidebar styles */
+.bm-menu {
+  background: #efffef;
+  opacity: .7;
+  padding: 2.5em 1em 0;
+  font-size: .9em;
+  width: 100%;
+  text-align: left;
+}
+
+.bm-menu a {
+  text-decoration: none;
+  color: black;
+}
+
+  .bm-cross-button {
+    height: 24px;
+    width: 24px;
+    color: black;
+  }
+
+  /* Color/shape of close button cross */
+  .bm-cross {
+    background: black;
+}
+
+.bm-slider-icon {
+  height: 50%;
+  bottom: 0;
+  position: absolute;
+}
+
+  .bm-slider-icon img {
+    width: 50%;
+    opacity: .7;
+    margin-left: 15%;
+    margin-bottom: 0;
+  }
+
+  .view-pw {
+    border-style: none;
+  }
+
+  .pw-input-wrapper {
+    border-style: 1px solid;
+  }
+
+  .eye-icon-pw {
+    width: 1.5%;
+    margin-left: .2em;
+    opacity:.75;
+  }

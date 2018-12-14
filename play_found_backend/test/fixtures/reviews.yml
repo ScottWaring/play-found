@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  user: one
+  review: MyText
+  rating: 1
+  cached_playground: one
+  yelp_playground: MyString
+
+two:
+  title: MyString
+  user: two
+  review: MyText
+  rating: 1
+  cached_playground: two
+  yelp_playground: MyString

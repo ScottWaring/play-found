@@ -1,6 +1,7 @@
 
 let initalState = {
   user: {},
+  loggedIn: false,
   playgrounds: [],
   selectedPlayground: {},
   bathrooms: [],
@@ -10,5 +11,11 @@ let initalState = {
 
 
 export default function reducers(state = initalState, action) {
-  return state
+  switch(action.type) {
+    case "UPDATE_LOGGED_IN":
+      return {loggedIn: !action.payload}
+    default:
+      return state
+  }
+
 }

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  user: one
+  location: MyString
+  business_type: MyString
+  rating: 1
+  changing_table: false
+  description: MyText
+
+two:
+  title: MyString
+  user: two
+  location: MyString
+  business_type: MyString
+  rating: 1
+  changing_table: false
+  description: MyText
