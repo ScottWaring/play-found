@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  location: MyString
+  business_type: MyString
+  rating: 1
+  bathroom: false
+  description: MyText
+  img_url: MyString
+
+two:
+  user: two
+  location: MyString
+  business_type: MyString
+  rating: 1
+  bathroom: false
+  description: MyText
+  img_url: MyString
