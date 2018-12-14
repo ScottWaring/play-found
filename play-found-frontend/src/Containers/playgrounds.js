@@ -11,4 +11,4 @@ class PlaygroundContainer extends Component {
   }
 }
 
-export default PlaygroundContainer
+export default connect()(PlaygroundContainer)

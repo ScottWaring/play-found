@@ -23,6 +23,7 @@ class NavBar extends Component {
 
   clickHandler =(e)=> {
     if (e.target.id === "log-out" ) {
+      localStorage.removeItem("token")
       return ( <Redirect to="/"/> )
     }
   }
