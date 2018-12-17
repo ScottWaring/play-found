@@ -30,8 +30,14 @@ class NavBar extends Component {
 
 
   render() {
+    let navHeader
+    if (isMobile) {
+      navHeader = "nav-header-mobile"
+    } else {
+      navHeader = "nav-header"
+    }
     return (
-      <div className="nav-header">
+      <div className={navHeader}>
       { !this.state.isOpen &&
         <Menu  isOpen={this.state.menuOpen} noOverlay width={ isMobile ?'30%': '12%'} customBurgerIcon={false} >
           <br />

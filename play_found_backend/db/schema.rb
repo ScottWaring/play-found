@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_13_151729) do
+ActiveRecord::Schema.define(version: 2018_12_17_200303) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,16 @@ ActiveRecord::Schema.define(version: 2018_12_13_151729) do
     t.datetime "updated_at", null: false
     t.index ["cached_playground_id"], name: "index_reviews_on_cached_playground_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
+  end
+
+  create_table "searches", force: :cascade do |t|
+    t.string "lat"
+    t.string "long"
+    t.string "location"
+    t.boolean "bathroom"
+    t.boolean "playground"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

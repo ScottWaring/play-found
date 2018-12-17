@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { isMobile } from "react-device-detect";
 import { connect } from 'react-redux'
-import { Router } from "react-router-dom";
+// import { Router } from "react-router-dom";
 
 class SignUp extends Component {
 

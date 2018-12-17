@@ -43,10 +43,16 @@
   margin-top: 1em;
   /* border-style: dotted; */
 }
-
 .nav-header {
   height: 8em;
   width: 100%;
+  /* border-style: solid; */
+}
+
+.nav-header-mobile {
+  height: 8em;
+  width: 100%;
+  margin-bottom: -15%;
   /* border-style: solid; */
 }
 
@@ -168,6 +174,19 @@ padding-top: 1em;
     border-style: none;
   }
 
+  #search-input {
+    width: 25%;
+    margin-left: 40%;
+    margin-bottom: 5%;
+  }
+
+  #mobile-search-input {
+    width: 110%;
+    height: 3em;
+    margin-left: 5%;
+    margin-bottom: 5%;
+  }
+
   .btn {
     border-color: #43fb45;
     /* border-width: .01em; */
@@ -218,6 +237,77 @@ padding-top: 1em;
   .no-submit-btn {
     color: red;
   }
+
+  .find-box {
+    width: 100%;
+    margin-top: 10%;
+  }
+  .find-box-mobile {
+    width: 100%;
+    padding-top: 20%;
+  }
+
+  #big-btn {
+    height: 15em;
+    width: 15em;
+    font-size: 1em;
+  }
+
+  .search-button {
+    /* border-style: solid; */
+    width: 20%;
+    height: 20%;
+    margin-left: 40%;
+  }
+
+  .mobile-search-button {
+    padding-top: 3em;
+  }
+
+  .search-input-div {
+    /* border-style: dashed; */
+    margin-bottom: 2%;
+    width: 40%;
+    height: 10%;
+    margin-left: 29%;
+  }
+
+  .playgrounds-scroll-box {
+    margin-top: 5%;
+    margin-right: 10%;
+    float: right;
+    overflow: auto;
+    height: 60vh;
+    width: 20%;
+    border-style: dashed;
+  }
+  .map-box {
+    float: left;
+    border-style: solid;
+    width: 50%;
+    height: 60vh;
+    margin-left: 10%;
+    margin-top: 5%;
+  }
+
+  .playgrounds-scroll-box-mobile {
+    margin: 5%;
+    /* float: right; */
+    overflow: auto;
+    height: 50vh;
+    width: 90%;
+    border-style: dashed;
+  }
+  .map-box-mobile {
+    /* float: left; */
+    border-style: solid;
+    width: 90%;
+    height: 40vh;
+    margin: 5%;
+  }
+  /* .search-input {
+    width: 0%;
+  } */
 
   /* Reveal */
   /* .hvr-reveal {
