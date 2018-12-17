@@ -7,7 +7,7 @@ class SearchController < ApplicationController
     if params.include?(:long)
       googleResp = RestClient.get "https://maps.googleapis.com/maps/api/place/nearbysearch/json?name=playground&location=#{params[:lat]},#{params[:long]}&rankby=distance&types=play&key=#{ENV['GOOGLE_API_KEY']}"
     # elsif params.include?(:location)
-    #   googleResp = RestClient.get "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=#{params[:location]}&name=playground&rankby=distance&types=play&key=AIzaSyCEQUDhNoYthtbW6fcYbUqeHXkMNZhM6HA"
+    #   googleResp = RestClient.get "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=#{params[:location]}&name=playground&rankby=distance&types=play&key=#{ENV['GOOGLE_API_KEY']}"
     end
     # byebug
     retResp = JSON.parse(googleResp)
