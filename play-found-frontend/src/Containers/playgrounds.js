@@ -20,6 +20,7 @@ class PlaygroundContainer extends Component {
     return (
       <div>
         <div className={mapName}>
+          <Map />
         </div>
         <div className={playgroundName}>
           {this.props.playgrounds.map((pg, idx) => <PlaygroundCard key={idx} pg={pg} />)}

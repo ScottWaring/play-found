@@ -11,3 +11,13 @@ export function callBackEndGoogle(body) {
     .then(res => dispatch({type: "ADD_PLAYGROUNDS", payload: res}))
   }
 }
+
+export function addCoordinates(body) {
+  return(dispatch)=> {
+    return dispatch({type: "ADD_COORDS", payload: body})
+  }
+}
+
+export function renderPg(pg) {
+  console.log(pg)
+}

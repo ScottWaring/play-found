@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isMobile } from "react-device-detect";
-import { callBackEndGoogle } from '../actions/actions'
+import { callBackEndGoogle, addCoordinates } from '../actions/actions'
 
 class FindPlaygrounds extends Component {
 
@@ -15,23 +15,9 @@ class FindPlaygrounds extends Component {
     })
   }
 
- //  callBackEndGoogle =(body)=> {
- //  console.log(body)
- //  fetch(`http://localhost:3000/search`,{
- //       method: 'POST',
- //       headers: {
- //         "Content-Type": "application/json"
- //       },
- //       body: JSON.stringify(body)
- //     })
- //     .then(res => res.json())
- //     .then(console.log)
- // }
-
 
   submitHandler =(e)=> {
     e.preventDefault()
-    console.log(this.props)
     let body = {}
     if (this.state.location_input === "" ) {
        let latLongAssign = new Promise(function(resolve, reject) {
@@ -40,12 +26,12 @@ class FindPlaygrounds extends Component {
               body.lat = position.coords.latitude;
               resolve(body)
          }
-     )}).then((body) => this.props.googleFetch(body))
+     )}).then((body) => this.props.googleFetch(body), this.props.addCoords(body))
       } else {
         body.location = this.state.location_input
         this.props.googleFetch(body)
+        this.props.addCoords(body)
     }
-      console.log(body)
       this.setState({location_input: ""})
   }
 
@@ -76,7 +62,8 @@ class FindPlaygrounds extends Component {
 
 const mapDispatchToProps =(dispatch)=> {
   return({
-    googleFetch: (body) => dispatch(callBackEndGoogle(body))
+    googleFetch: (body) => dispatch(callBackEndGoogle(body)),
+    addCoords: (body) => dispatch(addCoordinates(body))
   })
 }
 
