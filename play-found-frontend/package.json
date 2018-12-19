@@ -5,6 +5,7 @@
   "dependencies": {
     "bcrypt": "^3.0.2",
     "dotenv": "^6.2.0",
+    "fetch-base64": "^2.1.2",
     "react": "^16.6.3",
     "react-burger-menu": "^2.5.4",
     "react-device-detect": "^1.6.1",

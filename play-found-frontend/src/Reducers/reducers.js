@@ -5,7 +5,8 @@ let initalState = {
   playgrounds: [],
   selectedPlayground: {},
   bathrooms: [],
-  reviews: []
+  reviews: [],
+  coords: {}
 }
 
 
@@ -18,6 +19,10 @@ export default function reducers(state = initalState, action) {
       return {...state, user: action.payload.user, loggedIn: true}
     case "ADD_PLAYGROUNDS":
       return {...state, playgrounds: action.payload.results}
+    case "ADD_COORDS":
+      return {...state, coords: action.payload }
+    case "VIEW_PLAYGROUND":
+      return {...state, selectedPlayground: action.payload}
     default:
       return state
   }

@@ -4,8 +4,14 @@ import FindPlaygrounds from '../Components/findPlayground'
 import Map from '../Components/map'
 import PlaygroundCard from '../Components/playgroundCard'
 import { isMobile } from "react-device-detect";
+import { findPlaceGoogle } from '../actions/actions'
+import SelectedPlayground from '../Components/selectedPlayground'
 
 class PlaygroundContainer extends Component {
+
+  viewPg =(id)=> {
+    this.props.findPlace(id)
+  }
 
   renderPlaygrounds =()=> {
     let mapName
@@ -20,9 +26,10 @@ class PlaygroundContainer extends Component {
     return (
       <div>
         <div className={mapName}>
+          <Map/>
         </div>
         <div className={playgroundName}>
-          {this.props.playgrounds.map((pg, idx) => <PlaygroundCard key={idx} pg={pg} />)}
+          {this.props.playgrounds.map((pg, idx) => <PlaygroundCard key={idx} pg={pg} viewPg={this.viewPg}/>)}
         </div>
       </div>
     )
@@ -31,9 +38,15 @@ class PlaygroundContainer extends Component {
   render(){
     return(
       <div>
-        <div className="map-div">
-          {this.props.playgrounds.length > 0? this.renderPlaygrounds() : <FindPlaygrounds />}
+        { Object.keys(this.props.selectedPlayground).length === 0 ?
+          <div className="map-div">
+          {this.props.playgrounds.length > 0 ? this.renderPlaygrounds() : <FindPlaygrounds />}
         </div>
+        :
+        <div className="selected-playground">
+          <SelectedPlayground />
+        </div>
+      }
       </div>
     )
   }
@@ -41,8 +54,15 @@ class PlaygroundContainer extends Component {
 
 const mapStateToProps =(state)=> {
   return {
-    playgrounds: state.playgrounds
+    playgrounds: state.playgrounds,
+    selectedPlayground: state.selectedPlayground
   }
 }
 
-export default connect(mapStateToProps)(PlaygroundContainer)
+const mapDispatchToProps =(dispatch)=> {
+  return {
+    findPlace: (id)=> dispatch(findPlaceGoogle(id))
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlaygroundContainer)
