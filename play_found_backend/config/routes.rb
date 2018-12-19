@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   end
 
   post '/search', to: 'search#create'
+  put '/search/place', to: 'search#find_place'
 end

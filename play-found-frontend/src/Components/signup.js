@@ -152,7 +152,7 @@ class SignUp extends Component {
       lastName: "",
       email: ""
     }))
-    this.safetyCheck = []
+    // this.safetyCheck = []
   }
 
   showPW =()=> {

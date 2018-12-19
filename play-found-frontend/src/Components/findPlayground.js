@@ -20,7 +20,8 @@ class FindPlaygrounds extends Component {
     e.preventDefault()
     let body = {}
     if (this.state.location_input === "" ) {
-       let latLongAssign = new Promise(function(resolve, reject) {
+       // let latLongAssign = 
+       new Promise(function(resolve, reject) {
         navigator.geolocation.getCurrentPosition(function success(position) {
               body.long = position.coords.longitude;
               body.lat = position.coords.latitude;
@@ -40,9 +41,15 @@ class FindPlaygrounds extends Component {
     let box
     let inputField
     let searchBtn
-    {isMobile ? searchBtn ="mobile-search-button" : searchBtn ="search-button"}
-    {isMobile ? inputField = "mobile-search-input" : inputField = "search-input"}
-    {isMobile ? box = "find-box-mobile" : box = "find-box"}
+    if (isMobile) {
+      searchBtn ="mobile-search-button"
+      inputField = "mobile-search-input"
+      box = "find-box-mobile"
+    } else {
+      searchBtn ="search-button"
+      inputField = "search-input"
+      box = "find-box"
+    }
     return (
       <div className="find-playground-div">
         <div className={box}>

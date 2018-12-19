@@ -142,7 +142,7 @@ padding-top: 1em;
   }
 
   .eye-icon-pw {
-    position: fixed;
+    position: absolute;
     width: 2%;
     margin-right: 25%;
     margin-top:4.5%;
@@ -272,16 +272,7 @@ padding-top: 1em;
     margin-left: 29%;
   }
 
-  .playgrounds-scroll-box {
-    text-align: left;
-    margin-top: 5%;
-    margin-right: 10%;
-    float: right;
-    overflow: auto;
-    height: 60vh;
-    width: 20%;
-    /* border-style: dashed; */
-  }
+
   .map-box {
     float: left;
     /* border-style: solid; */
@@ -289,6 +280,7 @@ padding-top: 1em;
     height: 60vh;
     margin-left: 10%;
     margin-top: 5%;
+    border-radius: 5%;
   }
 
   .playgrounds-scroll-box-mobile {
@@ -297,6 +289,23 @@ padding-top: 1em;
     overflow: auto;
     height: 50vh;
     width: 90%;
+    background-color: #d1ffe1;
+    border-radius: 2%;
+
+    /* border-style: dashed; */
+  }
+
+  .playgrounds-scroll-box {
+    text-align: left;
+    margin-top: 5%;
+    margin-right: 10%;
+    float: right;
+    overflow: auto;
+    height: 60vh;
+    width: 25%;
+    background-color: #d1ffe1;
+    border-radius: 2%;
+    /* opacity: .5; */
     /* border-style: dashed; */
   }
   .map-box-mobile {
@@ -305,6 +314,7 @@ padding-top: 1em;
     width: 90%;
     height: 40vh;
     margin: 5%;
+    /* border-radius: 5%; */
   }
 
   #map {
@@ -312,6 +322,22 @@ padding-top: 1em;
     height: 100%;
   }
 
+  .pg-photo-box {
+    display: flex;
+    overflow-x: auto;
+    width: 100%;
+    height: 50%;
+    margin-top: 5%;
+  }
+
+  .pg-photo-box-mobile {
+    overflow: auto;
+    width: 90%;
+    height: 70vh;
+    margin-top: 15%;
+    margin-left:5%;
+    margin-bottom: 0;
+  }
   /* .search-input {
     width: 0%;
   } */
