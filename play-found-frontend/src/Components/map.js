@@ -12,7 +12,7 @@ class Map extends Component {
     } else {
       zoomIn = 15
     }
-
+    console.log("map")
     let coords = { lat: this.props.lat, lng: this.props.long }
 
      const map = new window.google.maps.Map(document.getElementById('map'), {
@@ -40,13 +40,10 @@ class Map extends Component {
         icon: pgIcon
       })
     })
-
    }
-
    render() {
      return (
        <div id="map"/>
-
      );
    }
 }
