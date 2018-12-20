@@ -55,7 +55,7 @@ class SignUp extends Component {
   }
 
   emailCheck =()=> {
-    let checker = /^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
+    let checker = /^([a-zA-Z0-9_]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
     if (checker.test(this.state.email)) {
       this.safetyCheck.push("pw2")
       return true
@@ -118,7 +118,6 @@ class SignUp extends Component {
         last_name: this.state.lastName,
         email: this.state.email
       }
-      console.log(body)
     return fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
       headers:{

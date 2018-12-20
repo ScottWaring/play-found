@@ -2,13 +2,21 @@ import React, { Component } from 'react'
 import { slide as Menu } from 'react-burger-menu'
 import { connect } from 'react-redux'
 import { isMobile } from "react-device-detect";
-import { Redirect } from "react-router-dom";
+import { Redirect, withRouter } from "react-router-dom";
 
 
 class NavBar extends Component {
   state = {
     menuOpen: false
   }
+
+  showUser =()=> {
+      return (
+        <div onClick={()=>this.props.history.push('/userprofile')} id="user-greeting">
+          Welcome back {this.props.user.username}!
+        </div>
+      )
+    }
 
   showSettings =(e)=> {
      e.preventDefault();
@@ -64,20 +72,19 @@ class NavBar extends Component {
           <img onClick={(e)=>this.showSettings(e)} id="show-menu" className="drop-menu" alt=" " src={require("../assets/transparent-drop-menu.png")}/>
         </div>
         <div className="castle-header">
-          <img className="castle" alt=" " src={require("../assets/full-transparent-title-logo.png")}/>
+          <img onClick={()=> this.props.history.push('/')} className="castle" alt=" " src={require("../assets/full-transparent-title-logo.png")}/>
         </div>
+        {this.props.loggedIn && this.showUser()}
       </div>
     )
   }
 }
+
 const mapStateToProps =(state)=> {
   return {
-    loggedIn: state.loggedIn
+    loggedIn: state.loggedIn,
+    user: state.user
   }
 }
 
-// const mapDispatchToProps =(dispatch)=> {
-//   changeLoggedIn: (this.props.loggedIn) =>({type: ""})
-// }
-
-export default connect(mapStateToProps)(NavBar)
+export default connect(mapStateToProps)(withRouter(NavBar))

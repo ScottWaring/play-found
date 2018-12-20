@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
-import { isMobile } from "react-device-detect";
+import { isMobile } from "react-device-detect"
+import { logUserIn } from '../actions/actions'
+import { connect } from 'react-redux'
 
 class LogIn extends Component {
   state ={
@@ -16,13 +18,8 @@ class LogIn extends Component {
 
   submitHandler =(e)=> {
     e.preventDefault(e)
-    fetch('localhost:3000', {
-      method: 'POST',
-      headers:{
-       'Content-Type': 'application/json'
-     },
-     body: JSON.stringify({})
-    })
+    let body = {username: this.state.userName, password: this.state.passWord}
+    this.props.logIn(body)
   }
 
   showPW =()=> {
@@ -52,4 +49,10 @@ class LogIn extends Component {
   }
 }
 
-export default LogIn
+const mapDispatchToProps =(dispatch)=> {
+  return {
+    logIn: (body) => dispatch(logUserIn(body))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(LogIn)

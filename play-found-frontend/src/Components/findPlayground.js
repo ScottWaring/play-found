@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isMobile } from "react-device-detect";
+import { withRouter } from "react-router-dom";
 import { callBackEndGoogle, addCoordinates } from '../actions/actions'
 
 class FindPlaygrounds extends Component {
@@ -15,25 +16,38 @@ class FindPlaygrounds extends Component {
     })
   }
 
-
   submitHandler =(e)=> {
     e.preventDefault()
+    let searchSplit = this.state.location_input.replace(/ /g, "+").replace(/,/g, "")
     let body = {}
-    if (this.state.location_input === "" ) {
-       // let latLongAssign = 
-       new Promise(function(resolve, reject) {
+     let API_KEY = process.env.REACT_APP_MAPQUEST_API_KEY
+    if (searchSplit !== "") {body.location = searchSplit}
+    if (this.state.location_input === ""){
+     new Promise(function(resolve, reject) {
         navigator.geolocation.getCurrentPosition(function success(position) {
-              body.long = position.coords.longitude;
-              body.lat = position.coords.latitude;
-              resolve(body)
+            body.long = position.coords.longitude;
+            body.lat = position.coords.latitude;
+            resolve(body)
+            // console.log(body)
          }
-     )}).then((body) => this.props.googleFetch(body), this.props.addCoords(body))
-      } else {
-        body.location = this.state.location_input
-        this.props.googleFetch(body)
-        this.props.addCoords(body)
-    }
+       )}).then((body) => this.props.googleFetch(body), this.props.addCoords(body))
+     } else {
+       let body2 = {}
+       let locationInput = this.state.location_input.replace(/" "/g, ",")
+       let url = `http://www.mapquestapi.com/geocoding/v1/address?key=${API_KEY}&location=${locationInput}`
+       fetch(url)
+       .then(res=>res.json())
+       .then(res => {
+         body2.lat = res.results[0].locations[0].latLng.lat
+         body2.long = res.results[0].locations[0].latLng.lng
+         this.props.googleFetch(body)
+         this.props.addCoords(body2)
+       })
+
+     }
+
       this.setState({location_input: ""})
+      this.props.history.push("/playgrounds/search/results")
   }
 
 
@@ -74,4 +88,4 @@ const mapDispatchToProps =(dispatch)=> {
   })
 }
 
-export default connect(null, mapDispatchToProps)(FindPlaygrounds)
+export default connect(null, mapDispatchToProps)(withRouter(FindPlaygrounds))
