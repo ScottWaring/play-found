@@ -79,6 +79,50 @@ export function addCoordinates(body) {
   }
 }
 
-export function renderPg(pg) {
-  console.log(pg)
+export function userAddPlayground(body) {
+  return(dispatch)=> {
+    return   fetch('http://localhost:3000/api/v1/addplayground', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(res=> res.json())
+    .then(console.log)
+  }
+}
+
+export function userAddBathroom(body) {
+  return(dispatch)=> {
+    return   fetch('http://localhost:3000/api/v1/addbathroom', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify(body)
+    })
+    .then(res=> res.json())
+    .then(console.log)
+  }
+}
+
+export function addReview(review) {
+  return(dispatch)=> {
+    return   fetch('http://localhost:3000/api/v1/addreview', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify(review)
+    })
+    .then(res=> res.json())
+    .then(console.log)
+  }
 }

@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
+
 class SelectedPlayground extends Component {
+    state = {
+      reviews: []
+    }
 
     render(){
       if (!this.props.pg.result) {
@@ -43,6 +47,15 @@ class SelectedPlayground extends Component {
         })
 
         let link = "https://www.google.com/maps/dir/?api=1&origin=" + this.props.coords.lat + "," + this.props.coords.long + "&destination=&destination_place_id=" + play.place_id
+
+        const renderReviews = this.state.reviews.map((r, idx) => {
+          return (
+            <div key={idx} className="review-card">
+              <p>{r.title}</p>
+            </div>
+          )
+        })
+
         return(
           <div className={pgBox}>
             <div className={titleBox}>
@@ -53,18 +66,26 @@ class SelectedPlayground extends Component {
                 <h4>{play.formatted_address}</h4>
               </div>
               <div className="link-wrapper">
+                <div className="add-review-link">
+                  <Link to='/addReview'>Add Review</Link>
+                </div>
                 <div className="website-link">
                   {play.website && <a href={play.website}>Website</a>}
                 </div>
                 <div className="directions-link">
                   <a href={link}>Directions</a>
                 </div>
+
               </div>
-              {console.log(link)}
-              {console.log(this.props)}
             </div>
             <div className={photoBox}>
               {photos}
+            </div>
+            <div className="reviews-box">
+              <p> Play, Found! User Reviews</p>
+              <div className="render-reviews">
+              {this.state.reviews.length === 0 ? <p> This Playground has no reviews yet</p> : renderReviews }
+              </div>
             </div>
           </div>
         )

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { isMobile } from "react-device-detect";
 import { connect } from 'react-redux';
 import AddMap from './addMap'
-import { addCoordinates } from '../actions/actions'
+import { addCoordinates, userAddPlayground } from '../actions/actions'
 
 class AddPlayground extends Component {
   state = {
@@ -10,12 +10,13 @@ class AddPlayground extends Component {
     pgLocation: "",
     pgDescription: "",
     businessType:"",
-    bathroom: "",
+    bathroom: "no",
     photos: [],
     photoPath: [],
     lat: "",
     long: "",
-    checkAddress: false
+    checkAddress: false,
+    icon: false
   }
 
   changeHandler =(e)=> {
@@ -32,12 +33,48 @@ class AddPlayground extends Component {
 
   submitHandler =(e)=> {
     e.preventDefault()
-    console.log(this.state)
+    let pgBody ={
+      user_id: this.props.user.id,
+      coordinates: this.props.coords,
+      bathroom: this.state.bathroom,
+      business_type: this.state.businessType,
+      photos: this.state.photoPath,
+      name: this.state.pgName,
+      address: this.state.pgLocation,
+      description: this.state.pgDescription,
+    }
+    console.log(pgBody)
+    this.props.addThisPlayground(pgBody)
   }
 
-  getAddress =(body)=> {
-    this.props.addCoords(body)
-    let url = "http://www.mapquestapi.com/geocoding/v1/reverse?key=" + process.env.REACT_APP_MAPQUEST_API_KEY + "&location=" + body.lat +","+ body.long +"&includeRoadMetadata=true&includeNearestIntersection=true"
+  changeAddyStatus =()=> {
+    if (this.state.checkAddress) {
+      this.setState({checkAddress: false})
+    } else {
+      this.setState({checkAddress: true}, ()=>this.confirmAddress())
+    }
+  }
+
+  confirmAddress =()=> {
+      let coords = {}
+      let newAddy = this.state.pgLocation.replace(/,/g, "").replace(/ /g, ",")
+      let url = "http://www.mapquestapi.com/geocoding/v1/address?key="+ process.env.REACT_APP_MAPQUEST_API_KEY  +"&location=" + newAddy
+      fetch(url)
+      .then(res => res.json())
+       .then(res =>
+       {
+        if (res.status > 0) {
+          alert("No results found, please try again")
+        } else  {
+          coords.lat = res.results[0].locations[0].latLng.lat
+          coords.lng = res.results[0].locations[0].latLng.lng
+          this.props.addCoords(coords)
+        }
+      })
+  }
+
+  getAddress =()=> {
+    let url = "http://www.mapquestapi.com/geocoding/v1/reverse?key=" + process.env.REACT_APP_MAPQUEST_API_KEY + "&location=" + this.props.coords.lat +","+ this.props.coords.lng +"&includeRoadMetadata=true&includeNearestIntersection=true"
     fetch(url)
     .then(res => res.json())
      .then(res =>
@@ -48,24 +85,11 @@ class AddPlayground extends Component {
         let r = res.results[0].locations[0]
         let address = r.street + " " + r.adminArea5 + ", " + r.adminArea3
         this.setState({
-          lat: body.lat,
-          long: body.long,
           pgLocation: address,
-          checkAddress: true
+          icon: true
         })
       }
     })
-  }
-
-  findLoc =()=> {
-    let body = {}
-    new Promise(function(resolve, reject) {
-       navigator.geolocation.getCurrentPosition(function success(position) {
-           body.long = position.coords.longitude;
-           body.lat = position.coords.latitude;
-           resolve(body)
-        }
-      )}, 300).then((body) => this.getAddress(body))
   }
 
   componentDidUpdate(prevProps) {
@@ -83,6 +107,12 @@ class AddPlayground extends Component {
   }
 
   render(){
+    let icon
+    if (this.state.icon === false) {
+      icon = "kid"
+    } else {
+      icon = "playground"
+    }
     let addBox
     let searchBox
     let addForm
@@ -140,17 +170,20 @@ class AddPlayground extends Component {
     return (
       <div className={addBox}>
         <div className={searchBox}>
+          <p>Drag The Pin To The Correct Location OR Enter An Address</p>
           <div className={mapBox}>
-            <AddMap type={"playground"}/>
+            <AddMap type={icon}/>
           </div>
           <div className={currentLocation}>
+          {this.props.coords.lat &&
             <div className={buttonBox}>
-              <button onClick={this.findLoc} id={btn} className="btn" type="button">Get Current Location?</button>
+              <button onClick={this.getAddress} id={btn} className="btn" type="button">Is Playground The Location Of The Pin?</button>
             </div>
+          }
           </div>
         </div>
-        <div className={addForm}>
-          <form onSubmit={e=>this.submitHandler(e)}className="sign-up-form">
+        <div onSubmit={e=>this.submitHandler(e)} className={addForm}>
+          <form className="sign-up-form">
           <input
             name="pgName"
             className={inputs}
@@ -159,6 +192,7 @@ class AddPlayground extends Component {
             type="text"
             onChange={(e)=>this.changeHandler(e)}
           /><br />
+          <p className={"check-addy"}> Please Ensure Address Is Correct </p>
           <input
             name="pgLocation"
             className={inputs}
@@ -167,7 +201,7 @@ class AddPlayground extends Component {
             type="text"
             onChange={(e)=>this.changeHandler(e)}
           /><br />
-          {this.state.checkAddress && <p className={"check-addy"}> Please Ensure Address Location Is Correct </p>}
+        {this.state.pgLocation.length > 5  &&  <div><input className="checker-input" onChange={this.changeAddyStatus} type="checkbox" name="checkAddress"/> <p className="checker"> Check To Use This Address </p></div>}
           <textarea
             name="pgDescription"
             className={inputs}
@@ -232,11 +266,14 @@ class AddPlayground extends Component {
             <button  id={btn} className="btn" type="submit">Add Playground</button>
           </div>
           </form>
-          {this.state.photoPath.length > 0 &&
-            <div className={photoBox}>
-              {viewAddedPhotos}
+            <div className="box-holder">
+              {this.state.photoPath.length > 0 &&
+                <div className={photoBox}>
+                  {viewAddedPhotos}
+                </div>
+              }
             </div>
-          }
+
 
         </div>
 
@@ -245,10 +282,18 @@ class AddPlayground extends Component {
   }
 }
 
+const mapStateToProps =(state)=> {
+  return {
+    coords: state.coords,
+    user: state.user
+  }
+}
+
 const mapDispatchToProps =(dispatch)=> {
   return({
-    addCoords: (body) => dispatch(addCoordinates(body))
+    addCoords: (body) => dispatch(addCoordinates(body)),
+    addThisPlayground: (body)=> dispatch(userAddPlayground(body))
   })
 }
 
-export default connect(null, mapDispatchToProps)(AddPlayground)
+export default connect(mapStateToProps, mapDispatchToProps)(AddPlayground)

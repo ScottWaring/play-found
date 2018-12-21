@@ -4,6 +4,9 @@ Rails.application.routes.draw do
       resources :users, only: [:create]
       post '/login', to: 'auth#create'
       get '/profile', to: 'users#profile'
+      post '/addplayground', to: 'cached_playground#create'
+      post '/addbathroom', to: 'bathroom#create'
+      post '/addreview', to: 'review#create'
     end
   end
 
