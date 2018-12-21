@@ -36,7 +36,7 @@ class SelectedPlayground extends Component {
         let photos = play.photos.map(p => {
           let image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + p.photo_reference + "&key=" + API_KEY
           return (
-            <div className={imageDiv}>
+            <div key={p.photo_reference} className={imageDiv}>
               <img key={p.photo_reference} className="pg-image" src={image} alt=""/>
             </div>
           )
