@@ -67,6 +67,12 @@ export function logUserIn(body) {
  }
 }
 
+export function logUserOut() {
+  return (dispatch) => {
+    return dispatch({type: "LOG_USER_OUT", payload: {}})
+  }
+}
+
 export function addCoordinates(body) {
   return(dispatch)=> {
     return dispatch({type: "ADD_COORDS", payload: body})

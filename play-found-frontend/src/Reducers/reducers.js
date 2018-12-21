@@ -19,6 +19,9 @@ export default function reducers(state = initalState, action) {
       return {...state, user: action.payload.user, loggedIn: true}
     case "GET_USER":
       return {...state, user: action.payload.user, loggedIn: true}
+    case "LOG_USER_OUT":
+      localStorage.clear()
+      return {...state, user: action.payload, loggedIn: false}
     case "ADD_PLAYGROUNDS":
       return {...state, playgrounds: action.payload.results}
     case "ADD_COORDS":
