@@ -16,13 +16,15 @@ ActiveRecord::Schema.define(version: 2018_12_17_200303) do
   enable_extension "plpgsql"
 
   create_table "bathrooms", force: :cascade do |t|
-    t.string "title"
+    t.string "name"
     t.bigint "user_id"
-    t.string "location"
+    t.string "address"
     t.string "business_type"
     t.integer "rating"
-    t.boolean "changing_table"
+    t.string "changing_table"
     t.text "description"
+    t.json "photos", default: [], array: true
+    t.json "coordinates", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_bathrooms_on_user_id"
@@ -30,12 +32,15 @@ ActiveRecord::Schema.define(version: 2018_12_17_200303) do
 
   create_table "cached_playgrounds", force: :cascade do |t|
     t.bigint "user_id"
-    t.string "location"
+    t.string "address"
+    t.string "name"
     t.string "business_type"
     t.integer "rating"
-    t.boolean "bathroom"
+    t.string "bathroom"
     t.text "description"
     t.string "img_url"
+    t.json "photos", default: [], array: true
+    t.json "coordinates", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_cached_playgrounds_on_user_id"
@@ -44,13 +49,11 @@ ActiveRecord::Schema.define(version: 2018_12_17_200303) do
   create_table "reviews", force: :cascade do |t|
     t.string "title"
     t.bigint "user_id"
-    t.text "review"
+    t.text "description"
     t.integer "rating"
-    t.bigint "cached_playground_id"
-    t.string "yelp_playground"
+    t.string "playground_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cached_playground_id"], name: "index_reviews_on_cached_playground_id"
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
@@ -77,6 +80,5 @@ ActiveRecord::Schema.define(version: 2018_12_17_200303) do
 
   add_foreign_key "bathrooms", "users"
   add_foreign_key "cached_playgrounds", "users"
-  add_foreign_key "reviews", "cached_playgrounds"
   add_foreign_key "reviews", "users"
 end

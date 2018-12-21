@@ -358,19 +358,56 @@ padding-top: 1em;
   }
 
   .website-link {
-    width: 45%;
+    width: 10%;
     /* border-style: solid; */
     float: left;
-    text-align: right;
-    margin-right: 2.5%;
+    /* text-align: right;
+    margin-right: 2.5%; */
   }
 
   .directions-link {
-    width: 45%;
+    width: 10%;
     /* border-style: dashed; */
     float: left;
-    text-align: left;
-    margin-left: 2.5%;
+    /* text-align: left;
+    margin-left: 2.5%; */
+  }
+  #rev-add-box {
+    /* border-style:dotted; */
+    height: 10vh;
+  }
+  .add-review-link {
+    width: 10%;
+    /* border-style: dashed; */
+    float: left;
+    margin-left: 35%;
+  }
+  .review-box {
+    /* border-style:dashed; */
+  }
+  .add-review-form-box {
+    /* border-style: solid; */
+    width:90%;
+    height: 70vh;
+    margin-top: 0%;
+    margin-left: 5%;
+  }
+
+  #review-form-input {
+    width: 40%;
+    margin-left: 27%;
+  }
+
+  #review-form-textarea {
+    width:40%;
+    margin-left: 27%;
+    margin-top: 1%;
+    height: 20vh;
+  }
+
+  #review-form-button {
+    /* border-style: dotted; */
+    margin-left: 31%;
   }
 
   .pg-title-box {
@@ -455,8 +492,28 @@ padding-top: 1em;
   width: 80%;
   height: 1vh;
   margin-left: 5%;
+  margin-bottom: 0;
 }
 
+.checker {
+  color: blue;
+  font-size: .25em;
+  width: 30%;
+  height: 1vh;
+  margin-left: 0%;
+  margin-bottom: 0;
+  /* border-style: solid; */
+  float:left;
+  margin-top: 0;
+}
+
+.checker-input {
+  width: 5%;
+  height: 1vh;
+  margin-left: 25%;
+  margin-bottom: 0;
+  float:left;
+}
 .add-box {
   /* border-style: solid; */
   margin-top: 5%;
@@ -469,6 +526,11 @@ padding-top: 1em;
   width: 40%;
   height: 80%;
   float: left;
+  margin-top: -2%;
+}
+
+.search-box p{
+  font-size: .5em;
 }
 
 .search-box-mobile {
@@ -706,6 +768,12 @@ padding-top: 1em;
   padding-bottom: 1%;
 }
 
+.box-holder {
+  height: 15vh;
+  width: 90%;
+  /* border-style: solid; */
+  float: left;
+}
 .get-current-location-mobile {
   border-style: solid;
   width: 90%;
@@ -720,6 +788,20 @@ padding-top: 1em;
   height: 80%;
   padding-bottom: 1%;
 }
+
+.reviews-box {
+  width: 100%;
+  float: left;
+  height: 30vh;
+  border-style: dashed;
+}
+
+.render-reviews {
+  overflow: scroll;
+}
+
+
+
   /* Bounce In */
 .hvr-bounce-in {
   display: inline-block;

@@ -3,11 +3,9 @@ class CreateReviews < ActiveRecord::Migration[5.2]
     create_table :reviews do |t|
       t.string :title
       t.references :user, foreign_key: true
-      t.text :review
+      t.text :description
       t.integer :rating
-      t.references :cached_playground, foreign_key: true
-      t.string :yelp_playground
-
+      t.string :playground_id
       t.timestamps
     end
   end

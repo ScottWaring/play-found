@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isMobile } from "react-device-detect";
-import { renderPg } from '../actions/actions'
+
 
 class Map extends Component {
 
@@ -56,10 +56,5 @@ const mapStateToProps =(state)=> {
     })
 }
 
-const mapDispatchToProps =(dispatch)=> {
-  return({
-    renderPg: (pg) => dispatch(renderPg(pg))
-  })
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(Map)
+export default connect(mapStateToProps)(Map)
