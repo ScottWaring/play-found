@@ -1,10 +1,7 @@
 class Api::V1::ReviewController < ApplicationController
 
   def create
-
     @review = Review.create(create_params)
-    # byebug
-
     if @review
       render json: @review
     else

@@ -7,6 +7,7 @@ Rails.application.routes.draw do
       post '/addplayground', to: 'cached_playground#create'
       post '/addbathroom', to: 'bathroom#create'
       post '/addreview', to: 'review#create'
+      put '/usercontent', to: 'content#user_content'
     end
   end
 
