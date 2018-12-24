@@ -17,14 +17,17 @@ class AddReview extends Component {
   }
 
   submitHandler =(e)=> {
+    console.log(localStorage.token,this.props.user.id,this.props.playground.result.id)
     e.preventDefault()
-    let review ={
-      title: this.state.title,
-      description: this.state.description,
-      user_id: this.props.user.id,
-      playground_id: this.props.playground.result.id
+      if (localStorage.token  !== undefined && this.props.user.id !== undefined  && this.props.playground.result.id !== undefined ) {
+      let review ={
+        title: this.state.title,
+        description: this.state.description,
+        user_id: this.props.user.id,
+        playground_id: this.props.playground.result.id
+      }
+      this.props.addThisReview(review)
     }
-    this.props.addThisReview(review)
   }
 
   render(){

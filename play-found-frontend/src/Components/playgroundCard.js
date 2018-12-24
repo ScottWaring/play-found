@@ -1,13 +1,47 @@
-import React from 'react'
+import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { findPlaceGoogle, showUserPlayground } from '../actions/actions'
+import { withRouter } from "react-router-dom";
 
-const PlaygroundCard =(props)=> {
-  return (
-    <div className="pg-card"  onClick={()=>props.viewPg(props.pg.place_id)}>
-      <h3>{props.pg.name}</h3>
-      <h5>{props.pg.vicinity ? props.pg.vicinity : props.pg.formatted_address}</h5>
-    </div>
-  )
+class PlaygroundCard extends Component {
+  viewPg =(id, type)=> {
+    if (type === "user"){this.props.cachedFetch(id).then(this.props.history.push("/playgrounds/view"))}
+    if (type === "google"){this.props.googleFetch(id).then(this.props.history.push("/playgrounds/view"))}
+  }
+
+
+  render() {
+    let pg = this.props.pg
+    let id
+    let type
+    let name
+    let address
+    if (pg.place_id !== undefined) {
+      id = pg.place_id
+      name = pg.name
+      address = pg.vicinity
+      type = "google"
+    } else {
+      id = pg.id
+      name = pg.name
+      address = pg.address
+      type = "user"
+    }
+    return (
+      <div className="pg-card bounce"  onClick={()=>this.viewPg(id, type)}>
+      {console.log(pg)}
+        <h3>{name}</h3>
+        <p>{address}</p>
+      </div>
+    )
+  }
 }
-//
 
-export default PlaygroundCard
+const mapDispatchToProps =(dispatch)=> {
+  return {
+    googleFetch: (id)=> dispatch(findPlaceGoogle(id)),
+    cachedFetch: (id)=> dispatch(showUserPlayground(id))
+  }
+}
+
+export default withRouter(connect(null, mapDispatchToProps)(PlaygroundCard))
