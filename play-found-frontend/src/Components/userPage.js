@@ -1,9 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { isMobile } from "react-device-detect";
+import { getUserContent } from '../actions/actions'
+import PlaygroundCard from '../Components/playgroundCard'
 
 
 class UserPage extends Component {
+
+  componentDidMount() {
+    if (localStorage.token !== undefined && this.props.userHasContent === false) {
+      this.props.userContent(this.props.user)
+    }
+  }
+
+  componentDidUpdate() {
+    if (localStorage.token !== undefined && this.props.userHasContent === false) {
+      this.props.userContent(this.props.user)
+    }
+  }
+
   render(){
     let userPage
     let nameBox
@@ -22,6 +37,31 @@ class UserPage extends Component {
       displayBox = "user-display-box"
 
     }
+
+    const showPlaygrounds = this.props.userPlaygrounds.map((pg, idx)=> {
+      return(
+      <PlaygroundCard key={idx} pg={pg} />
+      )
+    })
+
+    const showBathrooms = this.props.userBathrooms.map((br, idx)=> {
+      return(
+        <div className="pg-card bounce" key={idx}>
+        {br.name}
+        {br.address}
+        </div>
+      )
+    })
+
+    const showReviews = this.props.userReviews.map((rv, idx)=> {
+          return (
+            <div className="pg-card bounce" key={idx}>
+              <p>{rv.title}</p>
+              <p>{rv.description}</p>
+            </div>
+          )
+        })
+
     return (
       <div className={userPage}>
         <div className={nameBox}>
@@ -29,18 +69,22 @@ class UserPage extends Component {
         </div>
         <div className={usersItems}>
           <div className={displayBox}>
-          Your Favorites
+          Your Reviews
+          {console.log(this.props)}
             <div className="inner-user-display-box">
+            {this.props.userReviews.length > 0 && showReviews}
             </div>
           </div>
           <div className={displayBox}>
-          Your Reviews
+          Your Playgrounds
             <div className="inner-user-display-box">
+            {this.props.userPlaygrounds.length > 0 && showPlaygrounds}
             </div>
           </div>
           <div className={displayBox}>
           Your Bathrooms
             <div className="inner-user-display-box">
+          {this.props.userBathrooms.length > 0 && showBathrooms}
             </div>
           </div>
         </div>
@@ -50,8 +94,18 @@ class UserPage extends Component {
 }
   const mapStateToProps =(state)=> {
     return {
-      user: state.user
+      user: state.user,
+      userHasContent: state.userHasContent,
+      userReviews: state.userReviews,
+      userPlaygrounds: state.userPlaygrounds,
+      userBathrooms: state.userBathrooms
     }
   }
 
-export default connect(mapStateToProps)(UserPage)
+  const mapDispatchToProps =(dispatch)=> {
+    return {
+      userContent: (body) => dispatch(getUserContent(body))
+    }
+  }
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage)

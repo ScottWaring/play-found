@@ -4,8 +4,10 @@ let initalState = {
   loggedIn: false,
   playgrounds: [],
   selectedPlayground: {},
-  bathrooms: [],
-  reviews: [],
+  userHasContent: false,
+  userReviews: [],
+  userPlaygrounds: [],
+  userBathrooms: [],
   coords: {}
 }
 
@@ -22,6 +24,13 @@ export default function reducers(state = initalState, action) {
     case "LOG_USER_OUT":
       localStorage.clear()
       return {...state, user: action.payload, loggedIn: false}
+    case "ADD_USER_CONTENT":
+      return {...state,
+        userReviews: action.payload.user_content.reviews,
+        userPlaygrounds: action.payload.user_content.playgrounds,
+        userBathrooms: action.payload.user_content.bathrooms,
+        userHasContent: true
+      }
     case "ADD_PLAYGROUNDS":
       return {...state, playgrounds: action.payload.results}
     case "ADD_COORDS":

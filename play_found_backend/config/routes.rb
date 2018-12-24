@@ -8,8 +8,10 @@ Rails.application.routes.draw do
       post '/addbathroom', to: 'bathroom#create'
       post '/addreview', to: 'review#create'
       put '/usercontent', to: 'content#user_content'
+      put '/getplayground', to: 'cached_playground#show'
     end
   end
+
 
   post '/search', to: 'search#create'
   put '/search/place', to: 'search#find_place'

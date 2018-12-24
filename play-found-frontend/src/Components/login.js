@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { isMobile } from "react-device-detect"
 import { logUserIn } from '../actions/actions'
 import { connect } from 'react-redux'
+import { withRouter } from "react-router-dom";
+
 
 class LogIn extends Component {
   state ={
@@ -19,7 +21,8 @@ class LogIn extends Component {
   submitHandler =(e)=> {
     e.preventDefault(e)
     let body = {username: this.state.userName, password: this.state.passWord}
-    this.props.logIn(body)
+    this.props.logIn(body).then(this.props.history.push('/userprofile'))
+
   }
 
   showPW =()=> {
@@ -55,4 +58,4 @@ const mapDispatchToProps =(dispatch)=> {
   }
 }
 
-export default connect(null, mapDispatchToProps)(LogIn)
+export default withRouter(connect(null, mapDispatchToProps)(LogIn))

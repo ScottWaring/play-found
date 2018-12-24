@@ -20,7 +20,7 @@ class Map extends Component {
        zoom: zoomIn
      });
     let flag = {
-      url: require("../assets/pin-icon-gap-toothed-kid-blue.png"),
+      url: require("../assets/pin-icon-smiling-kid-blue.png"),
       scaledSize: new window.google.maps.Size(50, 50)
     }
     new window.google.maps.Marker({

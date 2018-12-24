@@ -97,7 +97,7 @@ class AddBathroom extends Component {
       this.state.photos.map(photo => {
         let reader  = new FileReader()
         reader.readAsDataURL(photo)
-        reader.onloadend =()=> {
+        return reader.onloadend =()=> {
           if (!this.state.photoPath.includes(reader.result)) {
             return this.setState({photoPath: [...this.state.photoPath, reader.result]})
           }

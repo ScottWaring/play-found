@@ -55,24 +55,30 @@ class FindPlaygrounds extends Component {
     let box
     let inputField
     let searchBtn
+    let btn
+    let inputDiv
     if (isMobile) {
       searchBtn ="mobile-search-button"
       inputField = "mobile-search-input"
       box = "find-box-mobile"
+      btn = "big-btn-mobile"
+      inputDiv = "search-input-div-mobile"
     } else {
       searchBtn ="search-button"
       inputField = "search-input"
       box = "find-box"
+      btn = "big-btn"
+      inputDiv = "search-input-div"
     }
     return (
       <div className="find-playground-div">
         <div className={box}>
           <form onSubmit={(e)=>this.submitHandler(e)} className="playground-finder">
-            <div className="search-input-div">
+            <div className={inputDiv}>
               <input id={inputField} onChange={this.changeHandler} className="form-inputs" value={this.state.location_input} name="location_input" type="text" placeholder="Search Location"/>
             </div>
             <div className={searchBtn}>
-            <button type="submit" id="big-btn" className= "btn hvr-bounce-in submit-btn">Find Playgrounds</button>
+            <button type="submit" id={btn} className="btn submit-btn"><p>Find Playgrounds</p></button>
           </div>
           </form>
         </div>
