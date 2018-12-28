@@ -44,7 +44,7 @@ class AddMap extends Component {
         }
       } else if (this.props.type === "kid") {
         flag = {
-          url: require("../assets/pin-icon-gap-toothed-kid-blue.png"),
+          url: require("../assets/pin-icon-smiling-kid-blue.png"),
           scaledSize: new window.google.maps.Size(50, 50)
         }
       }

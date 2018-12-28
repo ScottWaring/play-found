@@ -18,6 +18,11 @@ class NavBar extends Component {
      }
   }
 
+  logOutUser =()=> {
+    this.closeMenu()
+    this.props.logUserOut()
+  }
+
   closeMenu =()=> {
      this.setState({menuOpen: false})
   }
@@ -43,18 +48,18 @@ class NavBar extends Component {
           <br />
           <br />
           {!this.props.loggedIn ?
-              <Link id="log-in" className="menu-item" to="/login">Log In</Link>
+              <Link id="log-in" onClick={this.closeMenu} className="menu-item" to="/login">Log In</Link>
             :
-            <Link id="log-out" className="menu-item" onClick={this.props.logUserOut} to='/'>Log Out</Link>
+            <Link id="log-out" onClick={this.logOutUser} className="menu-item"  to='/'>Log Out</Link>
           }
           <br />
-          {!this.props.loggedIn && <Link  id="sign-up" className="menu-item" to="/signup">Sign Up</Link> }
+          {!this.props.loggedIn && <Link  id="sign-up" onClick={this.closeMenu} className="menu-item" to="/signup">Sign Up</Link> }
           {!this.props.loggedIn && <br />}
-          <Link id="find-playgrounds" className="menu-item" to="/playgrounds">Find Playground</Link>
+          <Link id="find-playgrounds" onClick={this.closeMenu} className="menu-item" to="/playgrounds">Find Playground</Link>
           {this.props.loggedIn && <br />}
-          { this.props.loggedIn && <Link id="add-playground" className="menu-item" to="/addplayground">Add A Playground</Link>}
+          { this.props.loggedIn && <Link id="add-playground" onClick={this.closeMenu} className="menu-item" to="/addplayground">Add A Playground</Link>}
           {this.props.loggedIn && <br />}
-          { this.props.loggedIn && <Link id="add-bathroom" className="menu-item" to="/addbathroom">Add A Bathroom</Link>}
+          { this.props.loggedIn && <Link id="add-bathroom" onClick={this.closeMenu} className="menu-item" to="/addbathroom">Add A Bathroom</Link>}
           <div className="bm-slider-icon">
             <img alt=" " src={require("../assets/transparent-play-found-logo.png")}/>
           </div>

@@ -40,7 +40,6 @@ class PlaygroundResults extends Component {
             <Map/>
           </div>
           <div className={playgroundName}>
-          {console.log(this.props.playgrounds)}
             {this.props.playgrounds.map((pg, idx) => <PlaygroundCard key={idx} pg={pg}/>)}
           </div>
         </div>
