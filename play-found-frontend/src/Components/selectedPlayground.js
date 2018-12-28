@@ -20,7 +20,6 @@ class SelectedPlayground extends Component {
       }
       else {
         let play = Object.assign({}, this.props.pg.result)
-        console.log(play)
         let API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
         let pgBox
         let titleBox
@@ -34,17 +33,9 @@ class SelectedPlayground extends Component {
         } else {
           pgBox = "render-playground"
           titleBox = "pg-title-box"
-          photoBox = "pg-photo-box"
+          photoBox = "pg-photo-box grid"
           imageDiv = "image-div"
         }
-        let photos = play.photos.map(p => {
-          let image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + p.photo_reference + "&key=" + API_KEY
-          return (
-            <div key={p.photo_reference} className={imageDiv}>
-              <img key={p.photo_reference} className="pg-image" src={image} alt=""/>
-            </div>
-          )
-        })
 
         let link = "https://www.google.com/maps/dir/?api=1&origin=" + this.props.coords.lat + "," + this.props.coords.long + "&destination=&destination_place_id=" + play.place_id
 
@@ -79,7 +70,14 @@ class SelectedPlayground extends Component {
               </div>
             </div>
             <div className={photoBox}>
-              {photos}
+              {play.photos === undefined ? "This Playground Has No Photos Yet" :  play.photos.map((p,idx) => {
+                let image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + p.photo_reference + "&key=" + API_KEY
+                return (
+                  <div key={idx} className={imageDiv}>
+                    <img key={idx} className="pg-image" src={image} alt=""/>
+                  </div>
+                )
+              })}
             </div>
             <div className="reviews-box">
               <p> Play, Found! User Reviews</p>

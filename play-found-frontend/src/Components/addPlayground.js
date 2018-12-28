@@ -153,7 +153,7 @@ class AddPlayground extends Component {
       picInput = "pg-pic-upload"
       photoBox = "add-pg-photo-review"
       userImage = "small-review-photo"
-      btn = "add-button"
+      btn = "big-btn"
       buttonBox = "add-button-box"
       currentLocation = "get-current-location"
       mapBox = "add-pg-mapbox"
