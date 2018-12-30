@@ -1,14 +1,17 @@
 .App {
-  text-align: center;
   background-image: radial-gradient(circle, #efffef, #00fa9a);
   background-size: cover;
-
+  min-height: 100vh;
+  position: absolute;
+  flex: 1;
 }
+
 /*
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
 } */
+
 
 /* .App-header {
   background-color: #282c34;
@@ -48,6 +51,8 @@
 .nav-header {
   height: 8em;
   width: 100%;
+  float:left;
+  margin-bottom: 2%;
   /* border-style: solid; */
 }
 
@@ -73,8 +78,32 @@
 }
 
 .footer {
-  height: 2em;
+  height: 10vh;
+  margin-top: 1%;
+  margin-bottom:0;
+  /* border: solid; */
+  width: 100vw;
+  float: left;
+  /* position:absolute; */
+  margin-bottom: 2%;
+
 }
+
+.inside-footer-pic-div {
+  /* border-style: dashed; */
+  width: 12vw;
+  height: 6vh;
+  margin-top: 1%;
+  margin-left: 43.5%;
+
+}
+
+.inside-footer-pic-div img {
+  width: 100%;
+  height: 100%;
+  opacity: .8;
+}
+
 
 .title {
 padding-top: 1em;
@@ -91,7 +120,13 @@ padding-top: 1em;
 }
 
 .landing-container {
-  min-height: 100vh;
+  min-height: 120vh;
+  margin-bottom: 2%;
+  /* border-style: dashed; */
+  /* margin-top:2%; */
+  width: 100vw;
+  /* float: left; */
+  padding-bottom: 5%;
 }
 
 .landing-container-mobile {
@@ -268,6 +303,10 @@ padding-top: 1em;
     padding-top: 20%;
   }
 
+  .find-playground-div {
+    margin-top: 20%;
+  }
+
   #big-btn-mobile {
     width: 90vw;
     height: 20vh;
@@ -320,9 +359,9 @@ padding-top: 1em;
   .search-input-div {
     /* border-style: dashed; */
     margin-bottom: 2%;
-    width: 100vw;
-    height: 5vh;
-    /* margin-left: 29%; */
+    width: 90vw;
+    height: 10vh;
+    margin-left: 3.5%;
   }
 
 
@@ -452,11 +491,67 @@ padding-top: 1em;
     margin-left: 31%;
   }
 
+  .selected-pg-error-box {
+    width: 30%;
+    height: 20%;
+    margin-left: 34%;
+    text-align: center;
+    margin-top: 25%;
+  }
+  .render-playground {
+    width: 100%;
+    /* border-style: double; */
+    min-height: 90vh;
+    margin-bottom:1vh;
+    float:left;
+  }
+
   .pg-title-box {
-    margin-top: 5%;
-    /* border-style: dashed; */
+    margin-top: 1%;
+    margin-bottom: 1%;
+    /* border-style: solid; */
     text-align: center;
     width: 100%;
+  }
+
+  .big-image {
+    background-color: rgba(255, 255, 255, 0.5);
+    background-size: cover;
+    width: 100vw;
+    height: 125vh;
+    z-index: 20;
+    position: absolute;
+    top: 0;
+    padding-top: 15%;
+    transition: all 500ms ease-in-out;
+    -webkit-transition: all 500ms ease-in-out;
+  }
+
+  .big-image-close {
+    /* border-style: solid; */
+    width: 2em;
+    height: 2em;
+    font-size: 2em;
+    float: right;
+    text-align: center;
+    margin-right: 1em;
+    margin-top: -1%;
+  }
+
+  .big-image-div {
+    /* border-style: dashed; */
+    width:60vw;
+    height: 60vh;
+    transition: all 500ms ease-in-out;
+    -webkit-transition: all 500ms ease-in-out;
+  }
+
+  .pg-big-image {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+
+    margin-left: 35%;
   }
 
   /* .pg-image {
@@ -532,7 +627,7 @@ padding-top: 1em;
     grid-template-rows: repeat(4, 25%);
     grid-gap: .5em;
     align-items: stretch;
-    justify-items: stretch;
+    justify-content: center;
     }
 
   .grid img {
@@ -540,24 +635,26 @@ padding-top: 1em;
     box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);
     width: 100%;
     height: 100%;
-
+    object-fit: cover;
+    align-self: center;
   }
 
 
 
   .pg-photo-box {
-    display: grid;
-    /* overflow-x: auto; */
-    width: 51.5vw;
-    height: 80vh;
-    margin-top: 5%;
-    margin-left: 23%;
+
+    width: 45vw;
+    min-height: 10vh;
+    margin-top: 2%;
+    margin-left: 26%;
     margin-right: 20%;
     background-color: white;
     border-style: solid;
     border-width: 1px;
     border-radius: 8px;
     padding: 1em;
+    padding-left:1em;
+    padding-bottom: 3em;
 
   }
 
@@ -574,6 +671,7 @@ padding-top: 1em;
     /* border-style: solid; */
     width: 100vw;
     height:50vh;
+    padding-top: 10%;
   }
 
   .image-loader {
@@ -970,8 +1068,10 @@ margin-top: -50%;
 .reviews-box {
   width: 100%;
   float: left;
-  height: 30vh;
-  border-style: dashed;
+  min-height: 10vh;
+  text-align: center;
+  margin-top: 2%;
+  /* border-style: dashed; */
 }
 
 .render-reviews {

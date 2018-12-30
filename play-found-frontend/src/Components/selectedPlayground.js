@@ -5,13 +5,25 @@ import { Link } from "react-router-dom";
 
 class SelectedPlayground extends Component {
     state = {
-      reviews: []
+      reviews: [],
+      displayImage: false,
+      image: ""
+    }
+
+    expandImage =(image)=> {
+      this.setState({displayImage: true, image: image})
+    }
+
+
+
+    closeImage =()=> {
+      this.setState({displayImage: false, image: ""})
     }
 
     render(){
       if (!this.props.pg.result) {
         return(
-          <div>
+          <div className="selected-pg-error-box">
           ....standby<br/>
           if nothing happens, then something broke...<br/>
           <Link to="/playgrounds">Take Me Home!</Link><br/>
@@ -47,8 +59,23 @@ class SelectedPlayground extends Component {
           )
         })
 
+        const ShowImage =()=> {
+          return (
+            <div className="big-image">
+            {console.log("yup")}
+              <div onClick={this.closeImage} className="big-image-close">
+                <p>X</p>
+              </div>
+              <div className="big-image-div">
+                <img className="pg-big-image" src={this.state.image} alt=""/>
+              </div>
+            </div>
+          )
+        }
+
         return(
           <div className={pgBox}>
+          {this.state.displayImage === true && <ShowImage/>}
             <div className={titleBox}>
               <div className="title-div">
                 <h3>{play.name}</h3>
@@ -73,7 +100,7 @@ class SelectedPlayground extends Component {
               {play.photos === undefined ? "This Playground Has No Photos Yet" :  play.photos.map((p,idx) => {
                 let image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + p.photo_reference + "&key=" + API_KEY
                 return (
-                  <div key={idx} className={imageDiv}>
+                  <div onClick={()=>this.expandImage(image)} key={idx} className={imageDiv}>
                     <img key={idx} className="pg-image" src={image} alt=""/>
                   </div>
                 )
@@ -90,6 +117,7 @@ class SelectedPlayground extends Component {
       }
   }
 }
+
 
 const mapStateToProps =(state)=> {
   return {
