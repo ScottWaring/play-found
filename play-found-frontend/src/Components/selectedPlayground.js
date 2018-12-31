@@ -14,8 +14,6 @@ class SelectedPlayground extends Component {
       this.setState({displayImage: true, image: image})
     }
 
-
-
     closeImage =()=> {
       this.setState({displayImage: false, image: ""})
     }
@@ -62,7 +60,6 @@ class SelectedPlayground extends Component {
         const ShowImage =()=> {
           return (
             <div className="big-image">
-            {console.log("yup")}
               <div onClick={this.closeImage} className="big-image-close">
                 <p>X</p>
               </div>

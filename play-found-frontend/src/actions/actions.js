@@ -1,5 +1,5 @@
 // const BASE_URL = "http://localhost:3000"
-const BASE_URL = `http://10.39.108.222:3000`
+const BASE_URL = `http://10.39.110.249:3000`
 
 
 export function callBackEndGoogle(body) {
@@ -153,7 +153,6 @@ export function getUserContent(body) {
 }
 
 export function showUserPlayground(id){
-  console.log(id)
   let body = {id: id}
   return(dispatch)=> {
     return fetch(`${BASE_URL}/api/v1/getplayground`, {
@@ -168,6 +167,26 @@ export function showUserPlayground(id){
     .then(res=> {
       if (res.status !== 404){
         return dispatch({type: "VIEW_PLAYGROUND", payload: res})
+      }
+    })
+  }
+}
+
+
+export function returnLocalBathrooms(coords) {
+  console.log(coords)
+  return(dispatch)=> {
+    return fetch(`${BASE_URL}/api/v1/getlocalbathrooms`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(coords)
+    })
+    .then(res=> res.json())
+    .then(res=> {
+      if (res.status !== 404){
+        return dispatch({type: "ADD_LOCAL_BATHROOMS", payload: res})
       }
     })
   }
