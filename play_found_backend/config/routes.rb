@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       get '/profile', to: 'users#profile'
       post '/addplayground', to: 'cached_playground#create'
       post '/addbathroom', to: 'bathroom#create'
+      put '/getlocalbathrooms', to: 'bathroom#find_local_bathrooms'
       post '/addreview', to: 'review#create'
       put '/usercontent', to: 'content#user_content'
       put '/getplayground', to: 'cached_playground#show'
