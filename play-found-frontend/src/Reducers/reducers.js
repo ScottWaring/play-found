@@ -8,7 +8,10 @@ let initalState = {
   userReviews: [],
   userPlaygrounds: [],
   userBathrooms: [],
-  coords: {}
+  coords: {},
+  localBathrooms: [],
+  viewBathroom: {},
+  renderPlaygroundResults: false
 }
 
 
@@ -34,9 +37,19 @@ export default function reducers(state = initalState, action) {
     case "ADD_PLAYGROUNDS":
       return {...state, playgrounds: action.payload.results}
     case "ADD_COORDS":
-      return {...state, coords: action.payload }
+      return {...state, coords: action.payload, renderPlaygroundResults: true }
     case "VIEW_PLAYGROUND":
       return {...state, selectedPlayground: action.payload}
+    case "ADD_LOCAL_BATHROOMS":
+      return {...state, localBathrooms: action.payload.bathrooms}
+    case "SHOW_BATHROOM":
+      let br = state.localBathrooms.find(b => b.id === action.payload)
+      return {...state, viewBathroom: br}
+    case "CLOSE_BATHROOM":
+      return {...state, viewBathroom: action.payload}
+    case "CLEAR_OLD_STATE":
+    console.log("reducer clear state")
+      return {...state, coords: {}, localBathrooms: [], renderPlaygroundResults: false}
     default:
       return state
   }

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isMobile } from "react-device-detect";
 import { withRouter } from "react-router-dom";
-import { callBackEndGoogle, addCoordinates } from '../actions/actions'
+import { callBackEndGoogle, addCoordinates, returnLocalBathrooms } from '../actions/actions'
 
 class FindPlaygrounds extends Component {
 
@@ -10,10 +10,21 @@ class FindPlaygrounds extends Component {
     location_input: ""
   }
 
+  componentDidMount() {
+     console.log("find component")
+    this.props.clearState()
+  }
+
   changeHandler =(e)=> {
     this.setState({
       [e.target.name]: e.target.value
     })
+  }
+
+  callBackEnd =(body)=> {
+    this.props.addCoords(body)
+    this.props.findBathrooms(body)
+    this.props.googleFetch(body)
   }
 
   submitHandler =(e)=> {
@@ -28,9 +39,8 @@ class FindPlaygrounds extends Component {
             body.long = position.coords.longitude;
             body.lat = position.coords.latitude;
             resolve(body)
-            // console.log(body)
          }
-       )}).then((body) => this.props.googleFetch(body), this.props.addCoords(body))
+       )}).then((body) => this.callBackEnd(body))
      } else {
        let body2 = {}
        let locationInput = this.state.location_input.replace(/" "/g, ",")
@@ -42,6 +52,7 @@ class FindPlaygrounds extends Component {
          body2.long = res.results[0].locations[0].latLng.lng
          this.props.googleFetch(body)
          this.props.addCoords(body2)
+         this.props.findBathrooms(body2)
        })
 
      }
@@ -90,8 +101,10 @@ class FindPlaygrounds extends Component {
 const mapDispatchToProps =(dispatch)=> {
   return({
     googleFetch: (body) => dispatch(callBackEndGoogle(body)),
-    addCoords: (body) => dispatch(addCoordinates(body))
+    addCoords: (body) => dispatch(addCoordinates(body)),
+    findBathrooms: (body) => dispatch(returnLocalBathrooms(body)),
+    clearState: () => dispatch({type: "CLEAR_OLD_STATE", payload: ""})
   })
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(FindPlaygrounds))
+export default withRouter(connect(null, mapDispatchToProps)(FindPlaygrounds))
