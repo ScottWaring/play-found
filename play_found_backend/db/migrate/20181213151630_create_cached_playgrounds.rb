@@ -1,5 +1,6 @@
 class CreateCachedPlaygrounds < ActiveRecord::Migration[5.2]
   def change
+    enable_extension "hstore"
     create_table :cached_playgrounds do |t|
       t.references :user, foreign_key: true
       t.string :address
@@ -11,7 +12,7 @@ class CreateCachedPlaygrounds < ActiveRecord::Migration[5.2]
       t.string :img_url
       t.string :object_type, default: "playground"
       t.json :photos, array: true, default: []
-      t.json :coordinates, array: true, default: []
+      t.hstore :coordinates, array: true, default: []
       t.timestamps
     end
   end
