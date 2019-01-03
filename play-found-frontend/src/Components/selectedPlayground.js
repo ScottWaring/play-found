@@ -176,9 +176,9 @@ class SelectedPlayground extends Component {
 const mapStateToProps =(state)=> {
   return {
     pg: state.selectedPlayground,
-    coords: state.coords,
     reviews: state.selectedPlaygroundReviews,
-    user: state.user
+    user: state.user,
+    coords: state.coords
   }
 }
 

@@ -264,7 +264,7 @@ export function deleteUserPlayground(playground_id, user_id) {
 }
 
 export function userEditPlayground(playground) {
-  console.log(playground)
+  console.log(playground.photos.length)
   let playObj = {id: playground.id, name: playground.name, address: playground.address, object_type: "playground"}
   return(dispatch)=> {
     return fetch(`${BASE_URL}/api/v1/edit_playground`, {

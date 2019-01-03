@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { isMobile } from "react-device-detect";
 import { connect } from 'react-redux';
-import AddMap from './addMap'
+import EditMap from './editMap'
 import { addCoordinates, userEditPlayground } from '../actions/actions'
 
 class EditPlayground extends Component {
@@ -179,7 +179,7 @@ class EditPlayground extends Component {
         <div className={searchBox}>
           <p>Drag The Pin To The Correct Location OR Enter An Address</p>
           <div className={mapBox}>
-            <AddMap type={icon}/>
+          {setTimeout(() => <EditMap type={icon}/>, 3000)}
           </div>
           <div className={currentLocation}>
           {this.props.coords.lat &&
@@ -280,8 +280,6 @@ class EditPlayground extends Component {
                 </div>
               }
             </div>
-
-
         </div>
 
       </div>
