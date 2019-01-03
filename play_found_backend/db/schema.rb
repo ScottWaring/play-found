@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 2018_12_22_200408) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "hstore"
   enable_extension "plpgsql"
 
   create_table "bathrooms", force: :cascade do |t|
@@ -42,7 +43,7 @@ ActiveRecord::Schema.define(version: 2018_12_22_200408) do
     t.string "img_url"
     t.string "object_type", default: "playground"
     t.json "photos", default: [], array: true
-    t.json "coordinates", default: [], array: true
+    t.hstore "coordinates", default: [], array: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_cached_playgrounds_on_user_id"

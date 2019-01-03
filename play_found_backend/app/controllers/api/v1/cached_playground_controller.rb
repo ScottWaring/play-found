@@ -1,4 +1,5 @@
 class Api::V1::CachedPlaygroundController < ApplicationController
+
   skip_before_action :authorized, only: [:show]
 
   def show
@@ -15,6 +16,7 @@ class Api::V1::CachedPlaygroundController < ApplicationController
 
   def create
     @playground = CachedPlayground.create(create_params)
+    # @playground.coordinates_will_change!
     @playground.coordinates.push(coords_params)
     params[:photos].each {|p| @playground.photos.push(p)}
     @playground.save
@@ -26,12 +28,13 @@ class Api::V1::CachedPlaygroundController < ApplicationController
   end
 
   def update
-    @pg = CachedPlayground.find_by(id: update_params[:id], user_id: update_params[:user_id])
+    @pg = CachedPlayground.find(update_params[:id])
     @pg.update(bathroom: update_params[:bathroom], name: update_params[:name], address: update_params[:address], description: update_params[:description], business_type: update_params[:business_type])
+    @pg.coordinates_will_change!
     @pg.coordinates = []
     @pg.coordinates.push(params[:coordinates])
-    @pg.photos = []
-    params[:photos].each {|p| @pg.photos.push(p)}
+    @pg.photos_will_change!
+    @pg.photos = params[:photos]
     @pg.save
     # byebug
   end
@@ -58,6 +61,8 @@ class Api::V1::CachedPlaygroundController < ApplicationController
   end
 
   def update_params
-    params.permit(:id,:user_id,:coordinates,:bathroom,:business_type,:photos,:name,:address,:description)
+    params[:photos]||[]
+
+    params.permit(:id,:user_id,:bathroom,:business_type,:photos, :coordinates,:name,:address,:description)
   end
 end
