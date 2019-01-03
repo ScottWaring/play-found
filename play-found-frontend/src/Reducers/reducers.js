@@ -57,7 +57,7 @@ export default function reducers(state = initalState, action) {
     case "CLOSE_REVIEW":
       return {...state, viewReview: {}}
     case "REVIEW_GOOD":
-      return {...state, reviewAdded: true, selectedPlaygroundReviews: [...state.selectedPlaygroundReviews, action.payload] }
+      return {...state, reviewAdded: true, userReviews: [...state.userReviews, action.payload.review], selectedPlaygroundReviews: [...state.selectedPlaygroundReviews, action.payload] }
     case "BATHROOM_GOOD":
       return {...state, reviewAdded: true, userBathrooms: [...state.userBathrooms, action.payload] }
     case "PLAYGROUND_GOOD":
@@ -78,6 +78,9 @@ export default function reducers(state = initalState, action) {
     case "EDIT_PLAYGROUND":
       let editPlaygroundArr = state.userPlaygrounds.filter(p => p.id !== action.payload.id)
       return {...state, userPlaygrounds: [...editPlaygroundArr, action.payload]}
+    case "EDIT_BATHROOM":
+      let editBathroomArr = state.userBathrooms.filter(b => b.id !== action.payload.id)
+      return {...state, userBathrooms: [...editBathroomArr, action.payload]}
     case "CLEAR_OLD_STATE":
       return {...state, coords: {}, localBathrooms: [], renderPlaygroundResults: false, reviewAdded: false}
     default:

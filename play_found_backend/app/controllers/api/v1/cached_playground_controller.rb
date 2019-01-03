@@ -16,7 +16,6 @@ class Api::V1::CachedPlaygroundController < ApplicationController
 
   def create
     @playground = CachedPlayground.create(create_params)
-    # @playground.coordinates_will_change!
     @playground.coordinates.push(coords_params)
     params[:photos].each {|p| @playground.photos.push(p)}
     @playground.save
@@ -62,7 +61,6 @@ class Api::V1::CachedPlaygroundController < ApplicationController
 
   def update_params
     params[:photos]||[]
-
     params.permit(:id,:user_id,:bathroom,:business_type,:photos, :coordinates,:name,:address,:description)
   end
 end

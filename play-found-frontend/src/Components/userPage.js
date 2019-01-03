@@ -25,9 +25,11 @@ class UserPage extends Component {
 
   editClick =(obj)=> {
     if (obj.object_type === "review") {
-      console.log(obj)
+      this.props.showReview(obj)
+      this.props.history.push('/review/edit')
     } else if (obj.object_type === "bathroom") {
-      console.log("bathroom")
+      this.props.showBathroom(obj)
+      this.props.history.push('/bathroom/edit')
     }
   }
 

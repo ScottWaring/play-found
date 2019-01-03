@@ -20,8 +20,9 @@ class EditPlayground extends Component {
     icon: true
   }
 
-  componentDidMount() {
-    this.props.addCoords(this.props.playground.coordinates[0])
+  deletePhoto =(photo)=> {
+    let newPhotoArr = this.state.photoPath.filter(p => p !== photo)
+    this.setState({photoPath: newPhotoArr})  
   }
 
   changeHandler =(e)=> {
@@ -99,7 +100,7 @@ class EditPlayground extends Component {
     })
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate() {
     if (this.state.photos.length > 0){
       this.state.photos.map(photo => {
         let reader  = new FileReader()
@@ -114,12 +115,7 @@ class EditPlayground extends Component {
   }
 
   render(){
-    let icon
-    if (this.state.icon === false) {
-      icon = "kid"
-    } else {
-      icon = "playground"
-    }
+    let icon = "playground"
     let addBox
     let searchBox
     let addForm
@@ -169,6 +165,7 @@ class EditPlayground extends Component {
     const viewAddedPhotos = this.state.photoPath.map((path, idx) => {
       return (
         <div key={idx} className={userImage}>
+        <div className="photo-remove" onClick={()=>this.deletePhoto(path)}>X</div>
            <img src={path} alt=""/>
          </div>
        )
@@ -179,7 +176,7 @@ class EditPlayground extends Component {
         <div className={searchBox}>
           <p>Drag The Pin To The Correct Location OR Enter An Address</p>
           <div className={mapBox}>
-          {setTimeout(() => <EditMap type={icon}/>, 3000)}
+          <EditMap type={icon}/>
           </div>
           <div className={currentLocation}>
           {this.props.coords.lat &&
@@ -270,7 +267,7 @@ class EditPlayground extends Component {
             />
           </div>
           <div className={buttonBox}>
-            <button  id={btn} className="btn" type="submit">Add Playground</button>
+            <button  id={btn} className="btn" type="submit">Update Playground</button>
           </div>
           </form>
             <div className="box-holder">

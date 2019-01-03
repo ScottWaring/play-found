@@ -37,7 +37,6 @@ class AddReview extends Component {
         playground_id: id,
         playground_name: name
       }
-      console.log(review)
       this.props.addThisReview(review)
       this.props.history.push('/playgrounds/view')
     }

@@ -56,7 +56,7 @@ class Map extends Component {
     }
     this.props.bathrooms.map(br => {
       let marker = new window.google.maps.Marker({
-        position: br.coordinates[0],
+        position: {lat: parseFloat(br.coordinates[0].lat), lng: parseFloat(br.coordinates[0].lng)},
         map: map,
         title: br.name,
         icon: brIcon,

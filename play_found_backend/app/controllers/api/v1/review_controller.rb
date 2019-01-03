@@ -21,6 +21,16 @@ class Api::V1::ReviewController < ApplicationController
     end
   end
 
+  def update
+    @review = Review.find_by(id: update_params[:id], user_id: update_params[:user_id], playground_id: update_params[:playground_id])
+    @review.update(title: update_params[:title], description: update_params[:description])
+    if @review
+      render json: {status: 200, review: @review, created_by: @review.user.username}
+    else
+      render json: {status: 400, message: "No Good Homie"}
+    end
+  end
+
   def destroy
     Review.find_by(id: delete_params[:review_id], user_id:  delete_params[:user_id]).destroy
   end
@@ -36,5 +46,9 @@ class Api::V1::ReviewController < ApplicationController
 
   def delete_params
     params.permit(:review_id, :user_id)
+  end
+
+  def update_params
+    params.permit(:id, :title, :description, :user_id, :playground_id, :playground_name,  )
   end
 end

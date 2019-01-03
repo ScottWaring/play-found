@@ -186,6 +186,7 @@ export function showUserPlayground(id){
 
 
 export function returnLocalBathrooms(coords) {
+  console.log(coords.lat)
   return(dispatch)=> {
     return fetch(`${BASE_URL}/api/v1/getlocalbathrooms`, {
       method: 'PUT',
@@ -276,5 +277,40 @@ export function userEditPlayground(playground) {
       body: JSON.stringify(playground)
     })
     .then(dispatch({type: "EDIT_PLAYGROUND", payload: playObj}))
+  }
+}
+
+export function userEditBathroom(bathroom) {
+  // let playObj = {id: playground.id, name: playground.name, address: playground.address, object_type: "playground"}
+  return(dispatch)=> {
+    return fetch(`${BASE_URL}/api/v1/edit_bathroom`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(bathroom)
+    })
+    .then(dispatch({type: "EDIT_BATHROOM", payload: bathroom}))
+  }
+}
+
+export function userEditReview(review) {
+  return(dispatch)=> {
+    return   fetch(`${BASE_URL}/api/v1/edit_review`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      },
+      body: JSON.stringify(review)
+    })
+    .then(res=> res.json())
+    .then(res => {
+      if (res.status === 200) {
+        return dispatch({type:"REVIEW_GOOD", payload: res})
+      }
+    })
   }
 }

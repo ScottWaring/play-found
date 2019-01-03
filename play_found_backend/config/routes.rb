@@ -10,8 +10,10 @@ Rails.application.routes.draw do
       post '/addbathroom', to: 'bathroom#create'
       put '/getlocalbathrooms', to: 'bathroom#find_local_bathrooms'
       delete '/delete_bathroom', to: "bathroom#destroy"
+      patch '/edit_bathroom', to: "bathroom#update"
       post '/addreview', to: 'review#create'
       put '/getreviews', to: 'review#find'
+      patch '/edit_review', to: 'review#update'
       delete '/delete_review', to: "review#destroy"
       put '/usercontent', to: 'content#user_content'
       put '/getplayground', to: 'cached_playground#show'

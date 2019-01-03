@@ -19,6 +19,11 @@ class AddPlayground extends Component {
     icon: false
   }
 
+  deletePhoto =(photo)=> {
+    let newPhotoArr = this.state.photoPath.filter(p => p !== photo)
+    this.setState({photoPath: newPhotoArr})
+  }
+
   changeHandler =(e)=> {
     this.setState({
       [e.target.name]: e.target.value
@@ -163,6 +168,7 @@ class AddPlayground extends Component {
     const viewAddedPhotos = this.state.photoPath.map((path, idx) => {
       return (
         <div key={idx} className={userImage}>
+          <div className="photo-remove" onClick={()=>this.deletePhoto(path)}>X</div>
            <img src={path} alt=""/>
          </div>
        )
