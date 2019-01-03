@@ -11,8 +11,6 @@ class Api::V1::BathroomController < ApplicationController
     end
   end
 
-
-
   def create
     @bathroom = Bathroom.create(create_params)
     @bathroom.coordinates.push(params[:coordinates])
@@ -25,6 +23,10 @@ class Api::V1::BathroomController < ApplicationController
     end
   end
 
+  def destroy
+    Bathroom.find_by(id: delete_params[:bathroom_id], user_id:  delete_params[:user_id]).destroy
+  end
+
   private
   def create_params
     params.permit(:user_id, :changing_table, :business_type, :name, :address, :description)
@@ -32,5 +34,9 @@ class Api::V1::BathroomController < ApplicationController
 
   def find_params
     params.permit(:lat, :long)
+  end
+
+  def delete_params
+    params.permit(:bathroom_id, :user_id)
   end
 end

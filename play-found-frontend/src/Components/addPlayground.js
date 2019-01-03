@@ -43,8 +43,8 @@ class AddPlayground extends Component {
       address: this.state.pgLocation,
       description: this.state.pgDescription,
     }
-    console.log(pgBody)
     this.props.addThisPlayground(pgBody)
+    this.props.history.push('/userprofile')
   }
 
   changeAddyStatus =()=> {
@@ -69,6 +69,7 @@ class AddPlayground extends Component {
           coords.lat = res.results[0].locations[0].latLng.lat
           coords.lng = res.results[0].locations[0].latLng.lng
           this.props.addCoords(coords)
+          this.setState({lat: coords.lat, long: coords.lng})
         }
       })
   }
@@ -160,11 +161,11 @@ class AddPlayground extends Component {
     }
 
     const viewAddedPhotos = this.state.photoPath.map((path, idx) => {
-        return (
-          <div key={idx} className={userImage}>
-             <img key={idx} src={path} alt=""/>
-           </div>
-         )
+      return (
+        <div key={idx} className={userImage}>
+           <img src={path} alt=""/>
+         </div>
+       )
     })
 
     return (

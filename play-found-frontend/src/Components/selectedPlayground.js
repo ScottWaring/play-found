@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
+import { addCoordinates, getPlaygroundReviews, deleteUserPlayground } from '../actions/actions'
 
 class SelectedPlayground extends Component {
     state = {
@@ -9,6 +10,18 @@ class SelectedPlayground extends Component {
       displayImage: false,
       image: ""
     }
+
+    componentDidMount() {
+      let body = {}
+      new Promise(function(resolve, reject) {
+         navigator.geolocation.getCurrentPosition(function success(position) {
+             body.long = position.coords.longitude;
+             body.lat = position.coords.latitude;
+             resolve(body)
+          }
+        )}).then((body) => this.props.addCoords(body))
+    }
+
 
     expandImage =(image)=> {
       this.setState({displayImage: true, image: image})
@@ -18,8 +31,18 @@ class SelectedPlayground extends Component {
       this.setState({displayImage: false, image: ""})
     }
 
+    editClick =(obj)=> {
+      this.props.history.push('/playgrounds/edit')
+    }
+
+    deleteClick =(obj)=> {
+      this.props.deletePlayground(obj.id, this.props.user.id)
+      this.props.history.push('/userprofile')
+    }
+
+
     render(){
-      if (!this.props.pg.result) {
+      if ( Object.keys(this.props.pg).length === 0) {
         return(
           <div className="selected-pg-error-box">
           ....standby<br/>
@@ -29,30 +52,45 @@ class SelectedPlayground extends Component {
         )
       }
       else {
-        let play = Object.assign({}, this.props.pg.result)
         let API_KEY = process.env.REACT_APP_GOOGLE_API_KEY
         let pgBox
         let titleBox
         let photoBox
         let imageDiv
+        let link
+        let play
+        let awaitingResults
+        let loaded
+        let loaderDiv
         if (isMobile){
           pgBox = "render-playground-mobile"
           titleBox = "pg-title-box-mobile"
           photoBox = "pg-photo-box-mobile"
           imageDiv = "image-div-mobile"
+          awaitingResults = "awaiting-results-box-mobile"
+          loaded ="loader-mobile"
+          loaderDiv = "image-loader-mobile"
         } else {
           pgBox = "render-playground"
           titleBox = "pg-title-box"
           photoBox = "pg-photo-box grid"
           imageDiv = "image-div"
+          awaitingResults = "awaiting-results-box"
+          loaded ="loader"
+          loaderDiv = "image-loader"
         }
-
-        let link = "https://www.google.com/maps/dir/?api=1&origin=" + this.props.coords.lat + "," + this.props.coords.long + "&destination=&destination_place_id=" + play.place_id
-
-        const renderReviews = this.state.reviews.map((r, idx) => {
+        if (this.props.pg.bathroom && Object.keys(this.props.coords).length > 0) {
+          play = Object.assign({}, this.props.pg)
+          link = "https://www.google.com/maps/dir/?api=1&origin=" + this.props.coords.lat + "," + this.props.coords.long + "&destination=" + this.props.pg.coordinates[0].lat + ","+ this.props.pg.coordinates[0].lng
+        } else if (this.props.pg.result && Object.keys(this.props.coords).length > 0) {
+          play = Object.assign({}, this.props.pg.result)
+          link = "https://www.google.com/maps/dir/?api=1&origin=" + this.props.coords.lat + "," + this.props.coords.long + "&destination=" + play.geometry.location.lat + "," + play.geometry.location.lng
+        }
+        const renderReviews = this.props.reviews.map((r, idx) => {
           return (
             <div key={idx} className="review-card">
-              <p>{r.title}</p>
+              <p className="rc-title">{r.review.title}</p> <p className="rc-creator"> Created By: {r.created_by}</p>
+              <p className="rc-desc">{r.review.description}</p>
             </div>
           )
         })
@@ -72,10 +110,20 @@ class SelectedPlayground extends Component {
 
         return(
           <div className={pgBox}>
-          {this.state.displayImage === true && <ShowImage/>}
+          { Object.keys(this.props.coords).length === 0 ?
+            <div className={awaitingResults}>
+              <div className={loaderDiv}></div>
+              <div className={loaded}></div>
+            </div>
+            :
             <div className={titleBox}>
+              {this.state.displayImage === true && <ShowImage/>}
               <div className="title-div">
                 <h3>{play.name}</h3>
+                { play.user_id === this.props.user.id &&  <div className="user-update">
+                    <div className="user-edit" onClick={()=>this.editClick(play)}><p>Edit</p></div>
+                    <div className="user-edit" onClick={()=>this.deleteClick(play)}><p>Delete</p></div>
+                  </div> }
               </div>
               <div className="address-div">
                 <h4>{play.formatted_address}</h4>
@@ -85,30 +133,39 @@ class SelectedPlayground extends Component {
                   <Link to='/addReview'>Add Review</Link>
                 </div>
                 <div className="website-link">
-                  {play.website && <a href={play.website}>Website</a>}
+                  {play.website && <a href={play.website} rel="noopener noreferrer" target="_blank">Website</a>}
                 </div>
                 <div className="directions-link">
-                  <a href={link}>Directions</a>
+                  <a href={link} rel="noopener noreferrer" target="_blank">Directions</a>
                 </div>
-
+              </div>
+              <div className={photoBox}>
+                {play.photos === undefined ?
+                  "This Playground Has No Photos Yet"
+                  :
+                  play.photos.map((p,idx) => {
+                    let image
+                    if (play.bathroom) {
+                      image = p
+                    } else {
+                      image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + p.photo_reference + "&key=" + API_KEY
+                    }
+                    return (
+                      <div onClick={()=>this.expandImage(image)} key={idx} className={imageDiv}>
+                        <img key={idx} className="pg-image" src={image} alt=""/>
+                      </div>
+                    )
+                  })
+                }
+              </div>
+              <div className="reviews-box">
+                <p> Play, Found! User Reviews</p>
+                <div className="render-reviews">
+                {this.props.reviews.length === 0 ? <p> This Playground has no reviews yet</p> : renderReviews }
+                </div>
               </div>
             </div>
-            <div className={photoBox}>
-              {play.photos === undefined ? "This Playground Has No Photos Yet" :  play.photos.map((p,idx) => {
-                let image = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + p.photo_reference + "&key=" + API_KEY
-                return (
-                  <div onClick={()=>this.expandImage(image)} key={idx} className={imageDiv}>
-                    <img key={idx} className="pg-image" src={image} alt=""/>
-                  </div>
-                )
-              })}
-            </div>
-            <div className="reviews-box">
-              <p> Play, Found! User Reviews</p>
-              <div className="render-reviews">
-              {this.state.reviews.length === 0 ? <p> This Playground has no reviews yet</p> : renderReviews }
-              </div>
-            </div>
+          }
           </div>
         )
       }
@@ -119,8 +176,19 @@ class SelectedPlayground extends Component {
 const mapStateToProps =(state)=> {
   return {
     pg: state.selectedPlayground,
-    coords: state.coords
+    coords: state.coords,
+    reviews: state.selectedPlaygroundReviews,
+    user: state.user
   }
 }
 
-export default connect(mapStateToProps)(SelectedPlayground)
+const mapDispatchToProps =(dispatch)=> {
+  return {
+    addCoords: (body)=> dispatch(addCoordinates(body)),
+    getReviews: (id)=> dispatch(getPlaygroundReviews(id)),
+    clearOldReviews: ()=> dispatch({type: "CLEAR_OLD_REVIEWS", payload: []}),
+    deletePlayground: (playground_id, user_id)=> dispatch(deleteUserPlayground(playground_id, user_id)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SelectedPlayground)

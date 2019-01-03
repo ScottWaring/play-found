@@ -2,21 +2,26 @@ import React, { Component } from 'react'
 import { isMobile } from "react-device-detect";
 import { connect } from 'react-redux';
 import AddMap from './addMap'
-import { addCoordinates, userAddBathroom } from '../actions/actions'
+import { addCoordinates, userEditPlayground } from '../actions/actions'
 
-class AddBathroom extends Component {
+class EditPlayground extends Component {
   state = {
-    brName: "",
-    brLocation: "",
-    brDescription: "",
-    businessType:"",
-    changingTable: "no",
+    user_id: this.props.playground.user_id,
+    pgName: this.props.playground.name,
+    pgLocation: this.props.playground.address,
+    pgDescription: this.props.playground.description,
+    businessType:this.props.playground.business_type,
+    bathroom: this.props.playground.bathroom,
     photos: [],
-    photoPath: [],
+    photoPath: this.props.playground.photos,
     lat: "",
     long: "",
     checkAddress: false,
-    icon: false
+    icon: true
+  }
+
+  componentDidMount() {
+    this.props.addCoords(this.props.playground.coordinates[0])
   }
 
   changeHandler =(e)=> {
@@ -33,18 +38,18 @@ class AddBathroom extends Component {
 
   submitHandler =(e)=> {
     e.preventDefault()
-    let brBody ={
+    let pgBody ={
+      id: this.props.playground.id,
       user_id: this.props.user.id,
       coordinates: this.props.coords,
-      changingTable: this.state.bathroom,
+      bathroom: this.state.bathroom,
       business_type: this.state.businessType,
       photos: this.state.photoPath,
-      name: this.state.brName,
-      address: this.state.brLocation,
-      description: this.state.brDescription,
+      name: this.state.pgName,
+      address: this.state.pgLocation,
+      description: this.state.pgDescription,
     }
-
-    this.props.addThisBathroom(brBody)
+    this.props.editThisPlayground(pgBody)
     this.props.history.push('/userprofile')
   }
 
@@ -58,7 +63,7 @@ class AddBathroom extends Component {
 
   confirmAddress =()=> {
       let coords = {}
-      let newAddy = this.state.brLocation.replace(/,/g, "").replace(/ /g, ",")
+      let newAddy = this.state.pgLocation.replace(/,/g, "").replace(/ /g, ",")
       let url = "http://www.mapquestapi.com/geocoding/v1/address?key="+ process.env.REACT_APP_MAPQUEST_API_KEY  +"&location=" + newAddy
       fetch(url)
       .then(res => res.json())
@@ -70,6 +75,7 @@ class AddBathroom extends Component {
           coords.lat = res.results[0].locations[0].latLng.lat
           coords.lng = res.results[0].locations[0].latLng.lng
           this.props.addCoords(coords)
+          this.setState({lat: coords.lat, long: coords.lng})
         }
       })
   }
@@ -86,7 +92,7 @@ class AddBathroom extends Component {
         let r = res.results[0].locations[0]
         let address = r.street + " " + r.adminArea5 + ", " + r.adminArea3
         this.setState({
-          brLocation: address,
+          pgLocation: address,
           icon: true
         })
       }
@@ -94,7 +100,7 @@ class AddBathroom extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.state.photos.length > 0 && this.state.photoPath.length < this.state.photos.length){
+    if (this.state.photos.length > 0){
       this.state.photos.map(photo => {
         let reader  = new FileReader()
         reader.readAsDataURL(photo)
@@ -112,7 +118,7 @@ class AddBathroom extends Component {
     if (this.state.icon === false) {
       icon = "kid"
     } else {
-      icon = "bathroom"
+      icon = "playground"
     }
     let addBox
     let searchBox
@@ -154,18 +160,18 @@ class AddBathroom extends Component {
       picInput = "pg-pic-upload"
       photoBox = "add-pg-photo-review"
       userImage = "small-review-photo"
-      btn = "add-button"
+      btn = "big-btn"
       buttonBox = "add-button-box"
       currentLocation = "get-current-location"
       mapBox = "add-pg-mapbox"
     }
 
     const viewAddedPhotos = this.state.photoPath.map((path, idx) => {
-        return (
-          <div key={idx} className={userImage}>
-             <img key={idx} src={path} alt=""/>
-           </div>
-         )
+      return (
+        <div key={idx} className={userImage}>
+           <img src={path} alt=""/>
+         </div>
+       )
     })
 
     return (
@@ -178,7 +184,7 @@ class AddBathroom extends Component {
           <div className={currentLocation}>
           {this.props.coords.lat &&
             <div className={buttonBox}>
-              <button onClick={this.getAddress} id={btn} className="btn" type="button">Is The Bathroom At The Location Of The Pin?</button>
+              <button onClick={this.getAddress} id={btn} className="btn" type="button">Is Playground The Location Of The Pin?</button>
             </div>
           }
           </div>
@@ -186,29 +192,29 @@ class AddBathroom extends Component {
         <div onSubmit={e=>this.submitHandler(e)} className={addForm}>
           <form className="sign-up-form">
           <input
-            name="brName"
+            name="pgName"
             className={inputs}
-            value={this.state.brName}
-            placeholder="Bathroom Name"
+            value={this.state.pgName}
+            placeholder="Playground Name"
             type="text"
             onChange={(e)=>this.changeHandler(e)}
           /><br />
           <p className={"check-addy"}> Please Ensure Address Is Correct </p>
           <input
-            name="brLocation"
+            name="pgLocation"
             className={inputs}
-            value={this.state.brLocation}
-            placeholder="Bathroom Location"
+            value={this.state.pgLocation}
+            placeholder="Playground Location"
             type="text"
             onChange={(e)=>this.changeHandler(e)}
           /><br />
-        {this.state.brLocation.length > 5  &&  <div><input className="checker-input" onChange={this.changeAddyStatus} type="checkbox" name="checkAddress"/> <p className="checker"> Check To Use This Address </p></div>}
+        {this.state.pgLocation.length > 5  &&  <div><input className="checker-input" onChange={this.changeAddyStatus} type="checkbox" name="checkAddress"/> <p className="checker"> Check To Use This Address </p></div>}
           <textarea
-            name="brDescription"
+            name="pgDescription"
             className={inputs}
             id="pg-desc"
-            value={this.state.brDescription}
-            placeholder="Brief Bathroom Description"
+            value={this.state.pgDescription}
+            placeholder="Playground Description"
             type="text"
             onChange={(e)=>this.changeHandler(e)}
           /><br />
@@ -234,7 +240,7 @@ class AddBathroom extends Component {
             </div>
           </div>
           <div className={buttons}>
-            <p>Changing Table: </p>
+            <p>Bathrooms: </p>
             <div className={eachButton}>
               <input
               type="radio"
@@ -264,7 +270,7 @@ class AddBathroom extends Component {
             />
           </div>
           <div className={buttonBox}>
-            <button  id={btn} className="btn" type="submit">Add Bathroom</button>
+            <button  id={btn} className="btn" type="submit">Add Playground</button>
           </div>
           </form>
             <div className="box-holder">
@@ -286,15 +292,16 @@ class AddBathroom extends Component {
 const mapStateToProps =(state)=> {
   return {
     coords: state.coords,
-    user: state.user
+    user: state.user,
+    playground: state.selectedPlayground
   }
 }
 
 const mapDispatchToProps =(dispatch)=> {
   return({
     addCoords: (body) => dispatch(addCoordinates(body)),
-    addThisBathroom: (body)=> dispatch(userAddBathroom(body))
+    editThisPlayground: (body)=> dispatch(userEditPlayground(body))
   })
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddBathroom)
+export default connect(mapStateToProps, mapDispatchToProps)(EditPlayground)

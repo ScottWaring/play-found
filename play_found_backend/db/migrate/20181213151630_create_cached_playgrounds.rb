@@ -9,6 +9,7 @@ class CreateCachedPlaygrounds < ActiveRecord::Migration[5.2]
       t.string :bathroom
       t.text :description
       t.string :img_url
+      t.string :object_type, default: "playground"
       t.json :photos, array: true, default: []
       t.json :coordinates, array: true, default: []
       t.timestamps

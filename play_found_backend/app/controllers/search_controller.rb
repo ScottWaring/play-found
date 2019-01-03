@@ -16,7 +16,10 @@ class SearchController < ApplicationController
       googleResp = RestClient.get "https://maps.googleapis.com/maps/api/place/details/json?placeid=#{params[:id]}&key=#{ENV['GOOGLE_API_KEY']}"
     end
     retResp = JSON.parse(googleResp)
-    render json: retResp
+    rev_arr = []
+    @reviews = Review.all.select {|r| r.playground_id === retResp["result"]["id"]}
+    @reviews.each {|r|rev_arr.push({review: r, created_by: r.user.username})}
+    render json: {status: 200, playground: retResp, reviews: rev_arr}
   end
 
 
