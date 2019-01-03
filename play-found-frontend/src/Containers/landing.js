@@ -6,6 +6,7 @@ import SignUp from '../Components/signup'
 import UserPage from '../Components/userPage'
 import AddBathroom from '../Components/addBathroom'
 import AddPlayground from '../Components/addPlayground'
+import EditPlayground from '../Components/editPlayground'
 import AddReview from '../Components/addReview'
 import SelectedPlayground from '../Components/selectedPlayground'
 import PlaygroundResults from '../Components/playgroundResults'
@@ -26,6 +27,7 @@ class Landing extends Component {
           <Switch>
             <Route path='/playgrounds/search/results' component={PlaygroundResults}/>
             <Route path='/playgrounds/view' component={SelectedPlayground} />
+            <Route path='/playgrounds/edit' component={EditPlayground} />
             <Route path='/playgrounds' component={PlaygroundContainer}/>
             <Route path='/login' component={LogIn}/>
             <Route path='/signup' component={SignUp}/>

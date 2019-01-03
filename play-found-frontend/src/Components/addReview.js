@@ -10,6 +10,7 @@ class AddReview extends Component {
     description: ""
   }
 
+
   changeHandler =(e)=> {
     this.setState({
       [e.target.name]: e.target.value
@@ -17,48 +18,68 @@ class AddReview extends Component {
   }
 
   submitHandler =(e)=> {
-    console.log(localStorage.token,this.props.user.id,this.props.playground.result.id)
     e.preventDefault()
-      if (localStorage.token  !== undefined && this.props.user.id !== undefined  && this.props.playground.result.id !== undefined ) {
+    let id
+    let name
+    if (this.props.playground.bathroom) {
+      id = this.props.playground.id
+      name = this.props.playground.name
+    } else if (this.props.playground.result) {
+      id = this.props.playground.result.id
+      name = this.props.playground.result.name
+    }
+
+      if (localStorage.token  !== undefined && this.props.user.id !== undefined  && id !== undefined ) {
       let review ={
         title: this.state.title,
         description: this.state.description,
         user_id: this.props.user.id,
-        playground_id: this.props.playground.result.id
+        playground_id: id,
+        playground_name: name
       }
+      console.log(review)
       this.props.addThisReview(review)
+      this.props.history.push('/playgrounds/view')
     }
   }
 
   render(){
-
       let addBox
       let addRevFormBox
       let revForm
       let buttonBox
       let btn
+      let name
+      let address
       if (isMobile) {
         addBox = "add-box-mobile"
         addRevFormBox = "add-review-form-box-mobile"
         revForm = "add-review-form-mobile"
         buttonBox = "add-button-box-mobile"
-        btn = "add-button-mobile"
+        btn = "big-btn"
       } else {
         addBox = "add-box"
         addRevFormBox = "add-review-form-box"
         revForm = "add-review-form"
         buttonBox = "add-button-box"
-        btn = "add-button"
+        btn = "big-btn"
+      }
+      if (this.props.playground.bathroom) {
+        name = this.props.playground.name
+        address = this.props.playground.address
+      } else if (this.props.playground.result) {
+        name = this.props.playground.result.name
+        address = this.props.playground.result.formatted_address
       }
 
 
       return (
         <div>
-        {this.props.playground.result &&
+        {Object.keys(this.props.playground).length > 0 &&
           <div id="rev-add-box" className={addBox}>
           <div className="review-box">
-            <h3>{this.props.playground.result.name}</h3>
-            <h4>{this.props.playground.result.formatted_address}</h4>
+            <h3>{name}</h3>
+            <h4>{address}</h4>
           </div>
         </div>
       }
@@ -67,10 +88,9 @@ class AddReview extends Component {
             <input onChange={this.changeHandler} id="review-form-input" className="form-inputs" value={this.state.title} name="title" placeholder="Playground Review Title"/>
             <textarea onChange={this.changeHandler} id="review-form-textarea" className="form-inputs" value={this.state.description} name="description" placeholder="Playground Review"/>
             <div id="review-form-button" className={buttonBox}>
-              <button  id={btn} className="btn" type="submit">Add Review</button>
+              <button  id={btn} className="btn review-btn " type="submit">Add Review</button>
             </div>
           </form>
-          {console.log(this.state)}
         </div>
         </div>
 
@@ -81,7 +101,8 @@ class AddReview extends Component {
 const mapStateToProps =(state)=> {
   return {
     playground: state.selectedPlayground,
-    user: state.user
+    user: state.user,
+    status: state.reviewAdded
   }
 }
 

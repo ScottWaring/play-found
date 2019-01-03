@@ -31,7 +31,6 @@ class PlaygroundCard extends Component {
       <div className="pg-card bounce"  onClick={()=>this.viewPg(id, type)}>
         <h3>{name}</h3>
         <p>{address}</p>
-        {console.log(pg.photos)}
       </div>
     )
   }

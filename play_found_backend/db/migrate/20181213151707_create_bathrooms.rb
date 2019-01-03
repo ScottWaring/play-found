@@ -8,6 +8,7 @@ class CreateBathrooms < ActiveRecord::Migration[5.2]
       t.integer :rating
       t.string :changing_table
       t.text :description
+      t.string :object_type, default: "bathroom"
       t.json :photos, array: true, default: []
       t.json :coordinates, array: true, default: []
       t.timestamps

@@ -1,5 +1,5 @@
-// const BASE_URL = "http://localhost:3000"
-const BASE_URL = `http://10.39.110.249:3000`
+const BASE_URL = "http://localhost:3000"
+// const BASE_URL = `http://192.168.1.7:3000`
 
 
 export function callBackEndGoogle(body) {
@@ -95,7 +95,11 @@ export function userAddPlayground(body) {
       body: JSON.stringify(body)
     })
     .then(res=> res.json())
-    .then(console.log)
+    .then(res => {
+      if (res.status === 200) {
+        return dispatch({type:"PLAYGROUND_GOOD", payload: res})
+      }
+    })
   }
 }
 
@@ -111,7 +115,11 @@ export function userAddBathroom(body) {
       body: JSON.stringify(body)
     })
     .then(res=> res.json())
-    .then(console.log)
+    .then(res => {
+      if (res.status === 200) {
+        return dispatch({type:"BATHROOM_GOOD", payload: res})
+      }
+    })
   }
 }
 
@@ -127,12 +135,15 @@ export function addReview(review) {
       body: JSON.stringify(review)
     })
     .then(res=> res.json())
-    .then(console.log)
+    .then(res => {
+      if (res.status === 200) {
+        return dispatch({type:"REVIEW_GOOD", payload: res})
+      }
+    })
   }
 }
 
 export function getUserContent(body) {
-  console.log(body)
   return(dispatch)=> {
     return fetch(`${BASE_URL}/api/v1/usercontent`, {
       method: 'PUT',
@@ -166,6 +177,7 @@ export function showUserPlayground(id){
     .then(res=> res.json())
     .then(res=> {
       if (res.status !== 404){
+        console.log(res)
         return dispatch({type: "VIEW_PLAYGROUND", payload: res})
       }
     })
@@ -174,7 +186,6 @@ export function showUserPlayground(id){
 
 
 export function returnLocalBathrooms(coords) {
-  console.log(coords)
   return(dispatch)=> {
     return fetch(`${BASE_URL}/api/v1/getlocalbathrooms`, {
       method: 'PUT',
@@ -189,5 +200,81 @@ export function returnLocalBathrooms(coords) {
         return dispatch({type: "ADD_LOCAL_BATHROOMS", payload: res})
       }
     })
+  }
+}
+
+export function getPlaygroundReviews(id) {
+  return(dispatch)=> {
+    return fetch(`${BASE_URL}/api/v1/getreviews`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({id:id})
+    })
+    .then(res => res.json())
+    .then(console.log)
+  }
+}
+
+export function deleteUserBathroom(bathroom_id, user_id) {
+  let body = {bathroom_id: bathroom_id, user_id: user_id}
+  console.log(body)
+  return(dispatch)=> {
+    return fetch(`${BASE_URL}/api/v1/delete_bathroom`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    })
+    .then(dispatch({type: "REMOVE_BATHROOM", payload: bathroom_id}))
+  }
+}
+
+export function deleteUserReview(review_id, user_id) {
+  let body = {review_id: review_id, user_id: user_id}
+  return(dispatch)=> {
+    return fetch(`${BASE_URL}/api/v1/delete_review`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    })
+    .then(dispatch({type: "REMOVE_REVIEW", payload: review_id}))
+  }
+}
+
+export function deleteUserPlayground(playground_id, user_id) {
+  let body = {playground_id: playground_id, user_id: user_id}
+  return(dispatch)=> {
+    return fetch(`${BASE_URL}/api/v1/delete_playground`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body)
+    })
+    .then(dispatch({type: "REMOVE_PLAYGROUND", payload: playground_id}))
+  }
+}
+
+export function userEditPlayground(playground) {
+  console.log(playground)
+  let playObj = {id: playground.id, name: playground.name, address: playground.address, object_type: "playground"}
+  return(dispatch)=> {
+    return fetch(`${BASE_URL}/api/v1/edit_playground`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(playground)
+    })
+    .then(dispatch({type: "EDIT_PLAYGROUND", payload: playObj}))
   }
 }

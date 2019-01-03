@@ -118,6 +118,7 @@ class SignUp extends Component {
         last_name: this.state.lastName,
         email: this.state.email
       }
+      console.log(body)
     return fetch('http://localhost:3000/api/v1/users', {
       method: 'POST',
       headers:{
@@ -165,15 +166,15 @@ class SignUp extends Component {
           <div className="inner-form-div">
           <h3>Sign Up</h3>
           <form onSubmit={e=>this.submitHandler(e)} className="sign-up-form">
-            <input name="userName" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.userName} placeholder="User Name" type="text"/><br />
-            <input name="firstName" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } placeholder="First Name" type="text"/><br />
-            <input name="lastName" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } placeholder="Last Name" type="text"/><br />
-            <input name="email" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.email} placeholder="Email Address" type="text"/><br />
+            <input name="userName" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.userName} placeholder="User Name" type="text" autoComplete="off"/><br />
+            <input name="firstName" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.firstName} placeholder="First Name" type="text" autoComplete="off"/><br />
+            <input name="lastName" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.lastName} placeholder="Last Name" type="text" autoComplete="off"/><br />
+            <input name="email" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.email} placeholder="Email Address" type="text" autoComplete="off"/><br />
             <div onClick={this.showPW} className="pw-input-wrapper">
               <img className="eye-icon-pw" src={require("../assets/eye-icon.png")} alt=""/>
-              <input name="passWord1" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" }  value={this.state.passWord1} placeholder="Password" type={this.state.viewPW ? "password" : "text"}/>
+              <input name="passWord1" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" }  value={this.state.passWord1} placeholder="Password" type={this.state.viewPW ? "password" : "text"} autoComplete="off"/>
             </div>
-            <input name="passWord2" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.passWord2} placeholder="Re-Enter Password" type={this.state.viewPW ? "password" : "text"}/><br />
+            <input name="passWord2" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.passWord2} placeholder="Re-Enter Password" type={this.state.viewPW ? "password" : "text"} autoComplete="off"/><br />
             <div className="form-btn">
               <button className={this.safetyCheck.length >= 6 ? "btn hvr-bounce-in submit-btn" : "btn hvr-bounce-in no-submit-btn" } type="submit">Sign Up!</button>
             </div>

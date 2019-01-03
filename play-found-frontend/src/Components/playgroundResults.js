@@ -6,9 +6,7 @@ import PlaygroundCard from '../Components/playgroundCard'
 import { withRouter } from "react-router-dom";
 
 class PlaygroundResults extends Component {
-  componentDidUpdate() {
-    console.log(this.props.bathroom.id)
-    }
+
 
   render(){
     let mapName
@@ -31,6 +29,7 @@ class PlaygroundResults extends Component {
     }
 
     const ShowBathroom =()=> {
+      let link = "https://www.google.com/maps/dir/?api=1&origin=" + this.props.coords.lat + "," + this.props.coords.long + "&destination=" + this.props.bathroom.coordinates[0].lat + ","+ this.props.bathroom.coordinates[0].lng
       let br = this.props.bathroom
       const showImages = br.photos.map((p, idx) => {
         return (
@@ -47,6 +46,9 @@ class PlaygroundResults extends Component {
             </div>
             <div className="br-info">
               <h4>{br.name}</h4>
+              <div className="directions-link">
+                <a href={link}  target="_blank" rel="noopener noreferrer">Directions</a>
+              </div>
               <p>{br.address}</p>
               <p>Business Type: {br.business_type}</p>
               <p>Changing Table: {br.changing_table}</p>
@@ -88,7 +90,8 @@ const mapStateToProps =(state)=> {
   return {
     playgrounds: state.playgrounds,
     show: state.renderPlaygroundResults,
-    bathroom: state.viewBathroom
+    bathroom: state.viewBathroom,
+    coords: state.coords
   }
 }
 

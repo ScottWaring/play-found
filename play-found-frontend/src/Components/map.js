@@ -7,7 +7,6 @@ import { isMobile } from "react-device-detect";
 class Map extends Component {
 
   renderBathroomModal(id) {
-    console.log("render map")
     this.props.showBathroom(id)
   }
 

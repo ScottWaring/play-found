@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 2018_12_22_200408) do
     t.integer "rating"
     t.string "changing_table"
     t.text "description"
+    t.string "object_type", default: "bathroom"
     t.json "photos", default: [], array: true
     t.json "coordinates", default: [], array: true
     t.datetime "created_at", null: false
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(version: 2018_12_22_200408) do
     t.string "bathroom"
     t.text "description"
     t.string "img_url"
+    t.string "object_type", default: "playground"
     t.json "photos", default: [], array: true
     t.json "coordinates", default: [], array: true
     t.datetime "created_at", null: false
@@ -57,6 +59,8 @@ ActiveRecord::Schema.define(version: 2018_12_22_200408) do
     t.text "description"
     t.integer "rating"
     t.string "playground_id"
+    t.string "playground_name"
+    t.string "object_type", default: "review"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_reviews_on_user_id"

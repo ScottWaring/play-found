@@ -510,6 +510,10 @@ padding-top: 1em;
     /* border-style:dotted; */
     height: 10vh;
   }
+
+  .review-btn {
+    margin-left: 20%;
+  }
   .add-review-link {
     width: 10%;
     /* border-style: dashed; */
@@ -518,6 +522,7 @@ padding-top: 1em;
   }
   .review-box {
     /* border-style:dashed; */
+    text-align: center;
   }
   .add-review-form-box {
     /* border-style: solid; */
@@ -543,6 +548,7 @@ padding-top: 1em;
     /* border-style: dotted; */
     margin-left: 31%;
   }
+
 
   .selected-pg-error-box {
     width: 30%;
@@ -612,6 +618,57 @@ padding-top: 1em;
     width: 100%
   } */
 
+  .pg-card2 {
+    border-style: solid;
+    border-width: 1px;
+    background-color:white;
+    /* border-color: white; */
+    height: 10vh;
+    margin-top: .5vh;
+    margin-bottom: .5em;
+    border-radius: 10px;
+    padding: .25em;
+      text-align: center;
+  }
+
+  .pg-card2 p {
+    width: 90%;
+    margin-top: 1%;
+    margin-bottom: 2%;
+    float: left;
+  }
+
+  .user-update {
+    width: 70%;
+    margin-top: 0;
+    margin-bottom: 2%;
+    margin-left: 15%;
+    padding-left: 10%;
+    position: relative;
+    height: 15%;
+    /* border-style:dashed; */
+    color: blue;
+  }
+
+  .user-edit {
+    font-size: .75em;
+    width: 30%;
+    float: left;
+    color: blue;
+    margin-bottom: 1%;
+    cursor: default;
+  }
+
+  #view-edit {
+    margin-left: 30%;
+    margin-bottom: -1%;
+    cursor: default;
+  }
+
+  .card-title-line {
+    font-weight: bold;
+    margin-bottom: -1%;
+  }
 
   .pg-card {
     border-style: solid;
@@ -1122,17 +1179,43 @@ margin-top: -50%;
 .reviews-box {
   width: 100%;
   float: left;
-  min-height: 10vh;
+  min-height: 20vh;
   text-align: center;
   margin-top: 2%;
   /* border-style: dashed; */
 }
 
 .render-reviews {
+  /* border-style: solid; */
+  min-height: 20vh;
+  width: 50vw;
+  margin-left: 25%;
   overflow: scroll;
 }
 
+.review-card {
+  width: 90%;
+  min-height: 10vh;
+  border-radius: 1vh;
+  margin-left: 5%;
+  margin-bottom: 1%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-style: solid;
+  border-width: 1px;
+}
 
+.rc-title {
+  width: 100%;
+  /* border-style: solid; */
+  margin-bottom: 0;
+  margin-top: .25em;
+}
+
+.rc-creator {
+  margin-top: 0;
+  font-size: .75em;
+
+}
 
   /* Bounce In */
 .hvr-bounce-in {

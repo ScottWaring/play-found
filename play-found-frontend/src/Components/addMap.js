@@ -39,7 +39,7 @@ class AddMap extends Component {
         }
       } else if (this.props.type === "bathroom") {
         flag = {
-          url: require("../assets/pin-icon-bathroom-green-blue.png"),
+          url: require("../assets/pin-icon-bathroom-green-black.png"),
           scaledSize: new window.google.maps.Size(50, 50)
         }
       } else if (this.props.type === "kid") {
