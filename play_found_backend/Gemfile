@@ -1,14 +1,6 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
-begin
-  require 'minitest/autorun'
-rescue LoadError => e
-  raise e unless ENV['RAILS_ENV'] == "production"
-end
-Bundler.require(*Rails.groups)
-if ['development', 'test'].include? ENV['RAILS_ENV']
-  Dotenv::Railtie.load
-end
+
 
 gem 'dotenv-rails', :groups => [:development, :test]
 
