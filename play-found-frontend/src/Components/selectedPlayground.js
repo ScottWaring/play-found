@@ -125,14 +125,15 @@ class SelectedPlayground extends Component {
               {this.state.displayImage === true && <ShowImage/>}
               <div className="title-div">
                 <h3>{play.name}</h3>
+                <div className="address-div">
+                  <h4>{play.formatted_address}</h4>
+                </div>
                 { play.user_id === this.props.user.id &&  <div className="user-update">
                     <div className="user-edit" onClick={()=>this.editClick(play)}><p>Edit</p></div>
                     <div className="user-edit" onClick={()=>this.deleteClick(play)}><p>Delete</p></div>
                   </div> }
               </div>
-              <div className="address-div">
-                <h4>{play.formatted_address}</h4>
-              </div>
+
               <div className="link-wrapper">
                 <div className="add-review-link">
                   <Link to='/addReview'>Add Review</Link>

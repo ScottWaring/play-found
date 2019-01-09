@@ -4,6 +4,7 @@
   min-height: 100vh;
   position: absolute;
   flex: 1;
+font-family: 'Thasadith', sans-serif;
 }
 
 /*
@@ -133,6 +134,16 @@ padding-top: 1em;
   min-height: 120vh;
 }
 
+.address-div {
+  /* border-style: solid; */
+  width: 50vw;
+  height: 5vh;
+  padding: 0;
+  /* margin-left: 15%; */
+  font-size: .75em;
+  text-align: center;
+  /* float: left; */
+}
 /* General sidebar styles */
 .bm-menu {
   background: #efffef;
