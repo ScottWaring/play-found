@@ -31,9 +31,13 @@ class AddPlayground extends Component {
   }
 
   fileHandler =(e)=> {
-    this.setState({
-      photos: [...this.state.photos, e.target.files[0]]
-    })
+    let reader  = new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+    return reader.onloadend =()=> {
+      if (!this.state.photoPath.includes(reader.result)) {
+        return this.setState({photoPath: [...this.state.photoPath, reader.result]})
+      }
+    }
   }
 
   submitHandler =(e)=> {
@@ -98,19 +102,7 @@ class AddPlayground extends Component {
     })
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.state.photos.length > 0 && this.state.photoPath.length < this.state.photos.length){
-      this.state.photos.map(photo => {
-        let reader  = new FileReader()
-        reader.readAsDataURL(photo)
-        return reader.onloadend =()=> {
-          if (!this.state.photoPath.includes(reader.result)) {
-            return this.setState({photoPath: [...this.state.photoPath, reader.result]})
-          }
-        }
-      })
-    }
-  }
+
 
   render(){
     let icon
@@ -269,17 +261,18 @@ class AddPlayground extends Component {
             onChange={this.fileHandler}
             />
           </div>
+          <div className="box-holder">
+            {this.state.photoPath.length > 0 &&
+              <div className={photoBox}>
+                {viewAddedPhotos}
+              </div>
+            }
+          </div>
           <div className={buttonBox}>
             <button  id={btn} className="btn" type="submit">Add Playground</button>
           </div>
           </form>
-            <div className="box-holder">
-              {this.state.photoPath.length > 0 &&
-                <div className={photoBox}>
-                  {viewAddedPhotos}
-                </div>
-              }
-            </div>
+
 
 
         </div>

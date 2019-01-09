@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { isMobile } from "react-device-detect";
-import { getUserContent, showUserPlayground, deleteUserReview, deleteUserBathroom} from '../actions/actions'
+import { getUserContent, showUserPlayground, deleteUserReview, deleteUserBathroom, addCoordinates} from '../actions/actions'
 // import PlaygroundCard from '../Components/playgroundCard'
 
 
@@ -15,6 +15,8 @@ class UserPage extends Component {
     if (localStorage.token !== undefined && this.props.userHasContent === false) {
       this.props.userContent(this.props.user)
     }
+    this.props.closeReview()
+    this.props.closeBathroom()
   }
 
   componentDidUpdate() {
@@ -28,6 +30,10 @@ class UserPage extends Component {
       this.props.showReview(obj)
       this.props.history.push('/review/edit')
     } else if (obj.object_type === "bathroom") {
+      let body = {}
+      body.lat = parseFloat(obj.coordinates[0].lat)
+      body.lng = parseFloat(obj.coordinates[0].lng)
+      this.props.addCoords(body)
       this.props.showBathroom(obj)
       this.props.history.push('/bathroom/edit')
     }
@@ -125,10 +131,11 @@ class UserPage extends Component {
               <p>X</p>
             </div>
             <div className="br-info">
+              <h5> Bathroom Details </h5>
               <h4>{br.name}</h4>
-              <div className="user-update">
-                <div className="user-edit" onClick={()=>this.editClick(br)}><p>Edit</p></div>
-                <div className="user-edit" onClick={()=>this.deleteClick(br)}><p>Delete</p></div>
+              <div id="br-modal" className="user-update">
+                <div id="br-modal-edit"className="user-edit" onClick={()=>this.editClick(br)}><p>Edit</p></div>
+                <div id="br-modal-delete" className="user-edit" onClick={()=>this.deleteClick(br)}><p>Delete</p></div>
               </div>
               <p>{br.address}</p>
               <p>Business Type: {br.business_type}</p>
@@ -153,14 +160,19 @@ class UserPage extends Component {
               <p>X</p>
             </div>
             <div className="br-info">
-              <h4>{r.title}</h4>
+              <h5>Playground Review</h5>
               <p>Playground: {r.playground_name}</p>
-              <p>Description: {r.description}</p>
+              <h4>{r.title}</h4>
+              <div id="br-modal" className="user-update">
+                <div id="br-modal-edit" className="user-edit" onClick={()=>this.editClick(r)}><p>Edit</p></div>
+                <div id="br-modal-delete" className="user-edit" onClick={()=>this.deleteClick(r)}><p>Delete</p></div>
+              </div>
+              <p> Description: </p>
+              <div id="user-review-div">
+                <p>{r.description}</p>
+              </div>
             </div>
-            <div className="user-update">
-              <div className="user-edit" onClick={()=>this.editClick(r)}><p>Edit</p></div>
-              <div className="user-edit" onClick={()=>this.deleteClick(r)}><p>Delete</p></div>
-            </div>
+
           </div>
         </div>
       )
@@ -171,7 +183,7 @@ class UserPage extends Component {
       {Object.keys(this.props.bathroom).length > 0 && <ShowBathroom />}
       {Object.keys(this.props.review).length > 0 && <ShowReview />}
         <div className={nameBox}>
-          <h3> HI! {this.props.user.username}</h3>
+          <h3> Hi! {this.props.user.username}</h3>
         </div>
         <div className={usersItems}>
           <div className={displayBox}>
@@ -219,7 +231,7 @@ class UserPage extends Component {
       closeReview: () => dispatch({type: "CLOSE_REVIEW", payload: {}}),
       deleteReview: (review_id, user_id)=> dispatch(deleteUserReview(review_id, user_id)),
       deleteBathroom: (bathroom_id, user_id)=> dispatch(deleteUserBathroom(bathroom_id, user_id)),
-
+      addCoords: (body) => dispatch(addCoordinates(body)),
     }
   }
 

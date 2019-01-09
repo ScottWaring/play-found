@@ -5,8 +5,8 @@ import { addCoordinates } from '../actions/actions'
 
 class EditMap extends Component {
 
-  
-    componentDidUpdate() {
+
+    componentDidMount() {
 
        let zoomIn
        if (isMobile) {
@@ -47,6 +47,7 @@ class EditMap extends Component {
 
       marker.addListener('dragend', (evt) => {
         let coords = {lng: parseFloat(evt.latLng.lng().toFixed(7)), lat: parseFloat( evt.latLng.lat().toFixed(7))}
+        console.log("edit map marker")
         return this.addCoords(coords)
       })
 

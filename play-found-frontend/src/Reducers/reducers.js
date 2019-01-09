@@ -14,7 +14,7 @@ let initalState = {
   localBathrooms: [],
   viewBathroom: {},
   renderPlaygroundResults: false,
-  reviewAdded: false
+  reviewAdded: false,
 }
 
 
@@ -40,6 +40,8 @@ export default function reducers(state = initalState, action) {
     case "ADD_PLAYGROUNDS":
       return {...state, playgrounds: action.payload.results}
     case "ADD_COORDS":
+    console.log("coords", action.payload)
+    console.trace()
       return {...state, coords: action.payload, renderPlaygroundResults: true }
     case "VIEW_PLAYGROUND":
       return {...state, selectedPlayground: action.payload.playground, selectedPlaygroundReviews: action.payload.reviews}
@@ -49,7 +51,11 @@ export default function reducers(state = initalState, action) {
       let br = state.localBathrooms.find(b => b.id === action.payload)
       return {...state, viewBathroom: br}
     case "SHOW_USER_BATHROOM":
-      return {...state, viewBathroom: action.payload}
+      let br_body = {}
+      br_body.lat = parseFloat(action.payload.coordinates[0].lat)
+      br_body.lng  = parseFloat(action.payload.coordinates[0].lng)
+      console.log("show user bathrom", br_body)
+      return {...state, viewBathroom: action.payload, coords: br_body}
     case "CLOSE_BATHROOM":
       return {...state, viewBathroom: action.payload}
     case "SHOW_USER_REVIEW":
@@ -79,8 +85,13 @@ export default function reducers(state = initalState, action) {
       let editPlaygroundArr = state.userPlaygrounds.filter(p => p.id !== action.payload.id)
       return {...state, userPlaygrounds: [...editPlaygroundArr, action.payload]}
     case "EDIT_BATHROOM":
+      let e_br = action.payload
+      e_br.coordinates = [action.payload.coordinates]
       let editBathroomArr = state.userBathrooms.filter(b => b.id !== action.payload.id)
-      return {...state, userBathrooms: [...editBathroomArr, action.payload]}
+      return {...state, userBathrooms: [...editBathroomArr, e_br]}
+    case "EDIT_REVIEW":
+    let editReviewArr = state.userReviews.filter(r => r.id !== action.payload.id)
+    return {...state, userReviews: [...editReviewArr, action.payload]}
     case "CLEAR_OLD_STATE":
       return {...state, coords: {}, localBathrooms: [], renderPlaygroundResults: false, reviewAdded: false}
     default:

@@ -20,6 +20,7 @@ class SelectedPlayground extends Component {
              resolve(body)
           }
         )}).then((body) => this.props.addCoords(body))
+        console.log("edit-playground")
     }
 
 
@@ -32,6 +33,10 @@ class SelectedPlayground extends Component {
     }
 
     editClick =(obj)=> {
+      let body = {}
+      body.lat = parseFloat(this.props.pg.coordinates[0].lat)
+      body.lng = parseFloat(this.props.pg.coordinates[0].lng)
+      this.props.addCoords(body)
       this.props.history.push('/playgrounds/edit')
     }
 

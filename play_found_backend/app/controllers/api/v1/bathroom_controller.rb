@@ -33,7 +33,7 @@ class Api::V1::BathroomController < ApplicationController
     @bathroom.photos_will_change!
     @bathroom.photos = params[:photos]
     @bathroom.save
-    # byebug
+    render json: @bathroom
   end
 
   def destroy

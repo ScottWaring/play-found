@@ -22,7 +22,7 @@ class EditPlayground extends Component {
 
   deletePhoto =(photo)=> {
     let newPhotoArr = this.state.photoPath.filter(p => p !== photo)
-    this.setState({photoPath: newPhotoArr})  
+    this.setState({photoPath: newPhotoArr})
   }
 
   changeHandler =(e)=> {
@@ -49,6 +49,7 @@ class EditPlayground extends Component {
       name: this.state.pgName,
       address: this.state.pgLocation,
       description: this.state.pgDescription,
+      object_type: "playground"
     }
     this.props.editThisPlayground(pgBody)
     this.props.history.push('/userprofile')
@@ -99,6 +100,14 @@ class EditPlayground extends Component {
       }
     })
   }
+
+  // componentDidMount() {
+  //   let pg_body = {}
+  //   pg_body.lat = parseFloat(this.props.playground.coordinates[0].lat)
+  //   pg_body.lng  = parseFloat(this.props.playground.coordinates[0].lng)
+  //   console.log(pg_body)
+  //   this.props.addCoords(pg_body)
+  // }
 
   componentDidUpdate() {
     if (this.state.photos.length > 0){
@@ -266,17 +275,18 @@ class EditPlayground extends Component {
             onChange={this.fileHandler}
             />
           </div>
+          <div className="box-holder">
+            {this.state.photoPath.length > 0 &&
+              <div className={photoBox}>
+                {viewAddedPhotos}
+              </div>
+            }
+          </div>
           <div className={buttonBox}>
             <button  id={btn} className="btn" type="submit">Update Playground</button>
           </div>
           </form>
-            <div className="box-holder">
-              {this.state.photoPath.length > 0 &&
-                <div className={photoBox}>
-                  {viewAddedPhotos}
-                </div>
-              }
-            </div>
+
         </div>
 
       </div>

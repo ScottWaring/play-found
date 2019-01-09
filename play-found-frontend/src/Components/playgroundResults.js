@@ -46,7 +46,7 @@ class PlaygroundResults extends Component {
             </div>
             <div className="br-info">
               <h4>{br.name}</h4>
-              <div className="directions-link">
+              <div className="br-directions-link">
                 <a href={link}  target="_blank" rel="noopener noreferrer">Directions</a>
               </div>
               <p>{br.address}</p>
@@ -71,7 +71,7 @@ class PlaygroundResults extends Component {
           <div className={loaded}></div>
         </div>
       :
-        <div>
+        <div className="results-container">
         {this.props.bathroom.id !== undefined && <ShowBathroom />}
           <div className={mapName}>
             <Map/>

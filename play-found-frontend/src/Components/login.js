@@ -11,7 +11,11 @@ class LogIn extends Component {
     userName: "",
     passWord: "",
   }
-
+  componentDidUpdate() {
+    if (this.props.loggedIn) {
+      this.props.history.push('/userprofile')
+    }
+  }
   changeHandler =(e)=> {
     this.setState({
       [e.target.name]: e.target.value
@@ -21,7 +25,7 @@ class LogIn extends Component {
   submitHandler =(e)=> {
     e.preventDefault(e)
     let body = {username: this.state.userName, password: this.state.passWord}
-    this.props.logIn(body).then(this.props.history.push('/userprofile'))
+    this.props.logIn(body)
 
   }
 
@@ -38,11 +42,12 @@ class LogIn extends Component {
           <form onSubmit={e=>this.submitHandler(e)} className="sign-up-form">
             <input name="userName" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" } value={this.state.userName} placeholder="User Name" type="text"/><br />
             <div onClick={this.showPW} className="pw-input-wrapper">
-              <img className="eye-icon-pw" src={require("../assets/eye-icon.png")} alt=""/>
+
               <input name="passWord" onChange={e=>this.changeHandler(e)} className={isMobile? "mobile-form-inputs" : "form-inputs" }  value={this.state.passWord} placeholder="Password" type={this.state.viewPW ? "password" : "text"}/>
+              <img id="log-in-eye" className="eye-icon-pw" src={require("../assets/eye-icon.png")} alt=""/>
             </div>
             <div className="form-btn">
-              <button className="btn hvr-bounce-in " type="submit">Log In</button>
+              <button id="big-btn" className="btn submit-btn " type="submit">Log In</button>
             </div>
           </form>
           </div>
@@ -52,10 +57,15 @@ class LogIn extends Component {
   }
 }
 
+const mapStateToProps =(state)=> {
+  return {
+    loggedIn: state.loggedIn
+  }
+}
 const mapDispatchToProps =(dispatch)=> {
   return {
     logIn: (body) => dispatch(logUserIn(body))
   }
 }
 
-export default withRouter(connect(null, mapDispatchToProps)(LogIn))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LogIn))

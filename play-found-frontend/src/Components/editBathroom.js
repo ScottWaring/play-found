@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { isMobile } from "react-device-detect";
 import { connect } from 'react-redux';
-import AddMap from './addMap'
+import EditMap from './editMap'
 import { addCoordinates, userEditBathroom } from '../actions/actions'
 
 class EditBathroom extends Component {
@@ -48,6 +48,7 @@ class EditBathroom extends Component {
       name: this.state.brName,
       address: this.state.brLocation,
       description: this.state.brDescription,
+      object_type: "bathroom"
     }
     console.log(brBody)
     this.props.editThisBathroom(brBody)
@@ -98,6 +99,7 @@ class EditBathroom extends Component {
       }
     })
   }
+
 
   componentDidUpdate(prevProps) {
     if (this.state.photos.length > 0){
@@ -155,7 +157,7 @@ class EditBathroom extends Component {
       picInput = "pg-pic-upload"
       photoBox = "add-pg-photo-review"
       userImage = "small-review-photo"
-      btn = "add-button"
+      btn = "big-btn"
       buttonBox = "add-button-box"
       currentLocation = "get-current-location"
       mapBox = "add-pg-mapbox"
@@ -175,7 +177,7 @@ class EditBathroom extends Component {
         <div className={searchBox}>
           <p>Drag The Pin To The Correct Location OR Enter An Address</p>
           <div className={mapBox}>
-            <AddMap type={icon}/>
+            <EditMap type={icon}/>
           </div>
           <div className={currentLocation}>
           {this.props.coords.lat &&
@@ -265,17 +267,18 @@ class EditBathroom extends Component {
             onChange={this.fileHandler}
             />
           </div>
+          <div className="box-holder">
+            {this.state.photoPath.length > 0 &&
+              <div className={photoBox}>
+                {viewAddedPhotos}
+              </div>
+            }
+          </div>
           <div className={buttonBox}>
             <button  id={btn} className="btn" type="submit">Update Bathroom</button>
           </div>
           </form>
-            <div className="box-holder">
-              {this.state.photoPath.length > 0 &&
-                <div className={photoBox}>
-                  {viewAddedPhotos}
-                </div>
-              }
-            </div>
+
 
 
         </div>

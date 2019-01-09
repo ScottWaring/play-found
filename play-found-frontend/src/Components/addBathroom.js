@@ -11,7 +11,6 @@ class AddBathroom extends Component {
     brDescription: "",
     businessType:"",
     changingTable: "no",
-    photos: [],
     photoPath: [],
     lat: "",
     long: "",
@@ -31,9 +30,13 @@ class AddBathroom extends Component {
   }
 
   fileHandler =(e)=> {
-    this.setState({
-      photos: [...this.state.photos, e.target.files[0]]
-    })
+    let reader  = new FileReader()
+    reader.readAsDataURL(e.target.files[0])
+    return reader.onloadend =()=> {
+      if (!this.state.photoPath.includes(reader.result)) {
+        return this.setState({photoPath: [...this.state.photoPath, reader.result]})
+      }
+    }
   }
 
   submitHandler =(e)=> {
@@ -98,19 +101,6 @@ class AddBathroom extends Component {
     })
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.state.photos.length > 0 && this.state.photoPath.length < this.state.photos.length){
-      this.state.photos.map(photo => {
-        let reader  = new FileReader()
-        reader.readAsDataURL(photo)
-        return reader.onloadend =()=> {
-          if (!this.state.photoPath.includes(reader.result)) {
-            return this.setState({photoPath: [...this.state.photoPath, reader.result]})
-          }
-        }
-      })
-    }
-  }
 
   render(){
     let icon
@@ -159,7 +149,7 @@ class AddBathroom extends Component {
       picInput = "pg-pic-upload"
       photoBox = "add-pg-photo-review"
       userImage = "small-review-photo"
-      btn = "add-button"
+      btn = "big-btn"
       buttonBox = "add-button-box"
       currentLocation = "get-current-location"
       mapBox = "add-pg-mapbox"
@@ -269,17 +259,18 @@ class AddBathroom extends Component {
             onChange={this.fileHandler}
             />
           </div>
+          <div className="box-holder">
+            {this.state.photoPath.length > 0 &&
+              <div className={photoBox}>
+                {viewAddedPhotos}
+              </div>
+            }
+          </div>
           <div className={buttonBox}>
             <button  id={btn} className="btn" type="submit">Add Bathroom</button>
           </div>
           </form>
-            <div className="box-holder">
-              {this.state.photoPath.length > 0 &&
-                <div className={photoBox}>
-                  {viewAddedPhotos}
-                </div>
-              }
-            </div>
+
 
 
         </div>

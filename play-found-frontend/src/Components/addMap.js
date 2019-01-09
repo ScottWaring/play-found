@@ -15,6 +15,7 @@ class AddMap extends Component {
            }
          )}, 200)
          .then((coords)=>this.props.addCoordinates(coords))
+         console.log("add map")
       }
 
     componentDidUpdate() {

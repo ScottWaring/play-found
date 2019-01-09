@@ -64,6 +64,7 @@ export function logUserIn(body) {
    .then(res => {
      if (res.status === 200) {
        dispatch({type: "LOG_IN_USER", payload: res})
+       return true
      } else {
        alert(res.message)
      }
@@ -309,7 +310,7 @@ export function userEditReview(review) {
     .then(res=> res.json())
     .then(res => {
       if (res.status === 200) {
-        return dispatch({type:"REVIEW_GOOD", payload: res})
+        return dispatch({type:"EDIT_REVIEW", payload: review})
       }
     })
   }
