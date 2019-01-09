@@ -18,6 +18,11 @@ require "json"
 Bundler.require(*Rails.groups)
 Dotenv::Railtie.load
 
+Bundler.require(*Rails.groups)
+if ['development', 'test'].include? ENV['RAILS_ENV']
+  Dotenv::Railtie.load
+end
+
 HOSTNAME = ENV['HOSTNAME']
 module PlayFoundBackend
   class Application < Rails::Application
