@@ -31,7 +31,7 @@ class FindPlaygrounds extends Component {
     e.preventDefault()
     let searchSplit = this.state.location_input.replace(/ /g, "+").replace(/,/g, "")
     let body = {}
-     let API_KEY = process.env.REACT_APP_MAPQUEST_API_KEY
+    let API_KEY = process.env.REACT_APP_MAPQUEST_API_KEY
     if (searchSplit !== "") {body.location = searchSplit}
     if (this.state.location_input === ""){
      new Promise(function(resolve, reject) {
@@ -50,9 +50,7 @@ class FindPlaygrounds extends Component {
        .then(res => {
          body2.lat = res.results[0].locations[0].latLng.lat
          body2.long = res.results[0].locations[0].latLng.lng
-         this.props.googleFetch(body)
-         this.props.addCoords(body2)
-         this.props.findBathrooms(body2)
+         this.callBackEnd(body2)
        })
 
      }

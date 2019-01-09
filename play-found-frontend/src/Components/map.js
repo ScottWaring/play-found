@@ -42,12 +42,24 @@ class Map extends Component {
     }
 
     this.props.playgrounds.map(pg => {
-      return new window.google.maps.Marker({
-        position: pg.geometry.location,
-        map: map,
-        title: pg.name,
-        icon: pgIcon
-      })
+      if (pg.geometry){
+        return new window.google.maps.Marker({
+          position: pg.geometry.location,
+          map: map,
+          title: pg.name,
+          icon: pgIcon
+        })
+      } else if (pg.coordinates) {
+        let pg_coords = {}
+        pg_coords.lat = parseFloat(pg.coordinates[0].lat)
+        pg_coords.lng = parseFloat(pg.coordinates[0].lng)
+        return new window.google.maps.Marker({
+          position: pg_coords,
+          map: map,
+          title: pg.name,
+          icon: pgIcon
+        })
+      }
     })
 
     let brIcon = {

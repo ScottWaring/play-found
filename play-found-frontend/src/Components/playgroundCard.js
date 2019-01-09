@@ -29,6 +29,7 @@ class PlaygroundCard extends Component {
     }
     return (
       <div className="pg-card bounce"  onClick={()=>this.viewPg(id, type)}>
+      {type === "user" && <div className="user-added-pg-card"><p>Play, Found! User Playground!</p></div>}
         <h3>{name}</h3>
         <p>{address}</p>
       </div>

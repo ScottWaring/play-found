@@ -3,6 +3,7 @@ const BASE_URL = "http://localhost:3000"
 
 
 export function callBackEndGoogle(body) {
+  console.log(body)
   return (dispatch) => {
   return fetch(`${BASE_URL}/search`,{
       method: 'POST',
@@ -187,7 +188,6 @@ export function showUserPlayground(id){
 
 
 export function returnLocalBathrooms(coords) {
-  console.log(coords.lat)
   return(dispatch)=> {
     return fetch(`${BASE_URL}/api/v1/getlocalbathrooms`, {
       method: 'PUT',

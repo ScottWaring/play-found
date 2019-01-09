@@ -552,8 +552,8 @@ padding-top: 1em;
   .link-wrapper {
     /* border-style: dotted; */
     width: 100%;
-    height: 1.5em;
-
+    height: 10vh;
+    margin: 1%;
     /* display: block; */
   }
 
@@ -696,6 +696,8 @@ padding-top: 1em;
     width: 100%
   } */
 
+
+
   .pg-card2 {
     border-style: solid;
     border-width: 1px;
@@ -718,7 +720,7 @@ padding-top: 1em;
 
   .user-update {
     width: 70%;
-    margin-top: 0;
+    margin-top: 1%;
     margin-bottom: 2%;
     margin-left: 15%;
     padding-left: 10%;
@@ -752,8 +754,9 @@ padding-top: 1em;
     border-style: solid;
     border-width: 1px;
     background-color:white;
+    padding: .25em;
     /* border-color: white; */
-    height: 10vh;
+    height: 12vh;
     margin-top: .5vh;
     margin-bottom: .5em;
     border-radius: 10px;
@@ -793,21 +796,33 @@ padding-top: 1em;
 
   .pg-card h3 {
     /* border-style:dashed; */
-    margin-top: 1%;
+    /* margin-top: 1%; */
     width: 100%;
-    height: 50%;
+    height: 40%;
     margin-bottom: 0;
     margin-left: 2%;
 
     float: left;
   }
+
   .pg-card p {
     /* border-style:dotted; */
-    margin-top: 1%;
+    /* margin-top: 1%; */
     margin-left: 2%;
+    margin-top:0;
     float: left;
   }
 
+  .user-added-pg-card {
+    width: 70%;
+    height: .5em;
+    /* border-style: dashed; */
+    margin-bottom: 0;
+    margin-top: 1%;
+    font-size: .45em;
+    color: blue;
+    float:left;
+  }
 
   .grid {
     display: grid;
@@ -1305,6 +1320,15 @@ margin-top: -50%;
 
 }
 
+.selected-pg-map-box {
+  width: 45vw;
+  height: 20vh;
+  margin-left: 27vw;
+  /* border-style: dashed; */
+  margin-top: 1%;
+  margin-bottom: 1%;
+  border-radius: 8px;
+}
   /* Bounce In */
 .hvr-bounce-in {
   display: inline-block;

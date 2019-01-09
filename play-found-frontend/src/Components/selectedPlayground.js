@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { isMobile } from "react-device-detect";
 import { Link } from "react-router-dom";
 import { addCoordinates, getPlaygroundReviews, deleteUserPlayground } from '../actions/actions'
+import ShowMap from '../Components/showMap'
+
 
 class SelectedPlayground extends Component {
     state = {
@@ -124,10 +126,13 @@ class SelectedPlayground extends Component {
             <div className={titleBox}>
               {this.state.displayImage === true && <ShowImage/>}
               <div className="title-div">
+              {play.object_type && <span className="user-added-pg-notice"><p>Play, Found! User Created Playground!</p></span>}
                 <h3>{play.name}</h3>
                 <div className="address-div">
-                  <h4>{play.formatted_address}</h4>
+                  <h4>{play.formatted_address ? play.formatted_address : play.address }</h4>
                 </div>
+                {play.object_type && <span className="user-added-pg-notice"><p>Bathroom: {play.bathroom}</p></span>}
+                {play.object_type && <span className="user-added-pg-notice"><p>Type: {play.business_type}</p></span>}
                 { play.user_id === this.props.user.id &&  <div className="user-update">
                     <div className="user-edit" onClick={()=>this.editClick(play)}><p>Edit</p></div>
                     <div className="user-edit" onClick={()=>this.deleteClick(play)}><p>Delete</p></div>
@@ -144,6 +149,9 @@ class SelectedPlayground extends Component {
                 <div className="directions-link">
                   <a href={link} rel="noopener noreferrer" target="_blank">Directions</a>
                 </div>
+              </div>
+              <div className="selected-pg-map-box">
+                <ShowMap/>
               </div>
               <div className={photoBox}>
                 {play.photos === undefined ?

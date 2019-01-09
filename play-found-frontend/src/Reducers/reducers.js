@@ -38,13 +38,20 @@ export default function reducers(state = initalState, action) {
         userHasContent: true
       }
     case "ADD_PLAYGROUNDS":
-      return {...state, playgrounds: action.payload.results}
+      return {...state, playgrounds: action.payload}
     case "ADD_COORDS":
-    console.log("coords", action.payload)
-    console.trace()
       return {...state, coords: action.payload, renderPlaygroundResults: true }
     case "VIEW_PLAYGROUND":
-      return {...state, selectedPlayground: action.payload.playground, selectedPlaygroundReviews: action.payload.reviews}
+      let viewPgCoords
+      if(action.payload.playground.result) {
+        viewPgCoords = action.payload.playground.result.geometry.location
+      } else {
+        viewPgCoords = {
+          lat: parseFloat(action.payload.playground.coordinates[0].lat),
+          lng: parseFloat(action.payload.playground.coordinates[0].lng)
+        }
+      }
+      return {...state, selectedPlayground: action.payload.playground, selectedPlaygroundReviews: action.payload.reviews, coords: viewPgCoords}
     case "ADD_LOCAL_BATHROOMS":
       return {...state, localBathrooms: action.payload.bathrooms}
     case "SHOW_BATHROOM":
@@ -54,7 +61,6 @@ export default function reducers(state = initalState, action) {
       let br_body = {}
       br_body.lat = parseFloat(action.payload.coordinates[0].lat)
       br_body.lng  = parseFloat(action.payload.coordinates[0].lng)
-      console.log("show user bathrom", br_body)
       return {...state, viewBathroom: action.payload, coords: br_body}
     case "CLOSE_BATHROOM":
       return {...state, viewBathroom: action.payload}
