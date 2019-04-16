@@ -13,17 +13,17 @@ class SelectedPlayground extends Component {
       image: ""
     }
 
-    componentDidMount() {
-      let body = {}
-      new Promise(function(resolve, reject) {
-         navigator.geolocation.getCurrentPosition(function success(position) {
-             body.long = position.coords.longitude;
-             body.lat = position.coords.latitude;
-             resolve(body)
-          }
-        )}).then((body) => this.props.addCoords(body))
-        console.log("edit-playground")
-    }
+    // componentDidMount() {
+    //   let body = {}
+    //   new Promise(function(resolve, reject) {
+    //      navigator.geolocation.getCurrentPosition(function success(position) {
+    //          body.long = position.coords.longitude;
+    //          body.lat = position.coords.latitude;
+    //          resolve(body)
+    //       }
+    //     )}).then((body) => this.props.addCoords(body))
+    //     console.log("edit-playground")
+    // }
 
 
     expandImage =(image)=> {
@@ -151,8 +151,8 @@ class SelectedPlayground extends Component {
                 </div>
               </div>
               <div className="selected-pg-map-box">
-                <ShowMap/>
-              </div>
+                  <ShowMap/>
+                </div>
               <div className={photoBox}>
                 {play.photos === undefined ?
                   "This Playground Has No Photos Yet"
@@ -204,5 +204,7 @@ const mapDispatchToProps =(dispatch)=> {
     deletePlayground: (playground_id, user_id)=> dispatch(deleteUserPlayground(playground_id, user_id)),
   }
 }
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(SelectedPlayground)

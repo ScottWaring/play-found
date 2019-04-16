@@ -22,12 +22,19 @@ class ShowMap extends Component {
           url: require("../assets/pin-icon-playground-green.png"),
           scaledSize: new window.google.maps.Size(50, 50)
         }
-
-      let marker = new window.google.maps.Marker({
-        position: this.props.coords,
+      let coords = {}
+      if (this.props.coords.long !== undefined) {
+        console.log(this.props.coords.long)
+        coords.lng = this.props.coords.long
+        coords.lat = this.props.coords.lat
+      } else if (this.props.coords.long === undefined) {
+        coords = this.props.coords
+      }
+      new window.google.maps.Marker({
+        position: coords,
         map: map,
         icon: flag,
-      })
+      }, console.log(this.props.coords, "marker"))
     }
 
     render() {

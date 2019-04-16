@@ -3,7 +3,7 @@ const BASE_URL = "http://localhost:3000"
 
 
 export function callBackEndGoogle(body) {
-  console.log(body)
+
   return (dispatch) => {
   return fetch(`${BASE_URL}/search`,{
       method: 'POST',

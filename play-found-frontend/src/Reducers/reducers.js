@@ -40,17 +40,22 @@ export default function reducers(state = initalState, action) {
     case "ADD_PLAYGROUNDS":
       return {...state, playgrounds: action.payload}
     case "ADD_COORDS":
+      // let view_cords ={}
+      console.log("add coords", action.payload)
+      console.trace()
       return {...state, coords: action.payload, renderPlaygroundResults: true }
     case "VIEW_PLAYGROUND":
       let viewPgCoords
       if(action.payload.playground.result) {
         viewPgCoords = action.payload.playground.result.geometry.location
-      } else {
+        console.log("view pg", viewPgCoords)
+      } else if (action.payload.playground.coordinates){
         viewPgCoords = {
           lat: parseFloat(action.payload.playground.coordinates[0].lat),
           lng: parseFloat(action.payload.playground.coordinates[0].lng)
         }
       }
+      console.log("view-pg", viewPgCoords)
       return {...state, selectedPlayground: action.payload.playground, selectedPlaygroundReviews: action.payload.reviews, coords: viewPgCoords}
     case "ADD_LOCAL_BATHROOMS":
       return {...state, localBathrooms: action.payload.bathrooms}
